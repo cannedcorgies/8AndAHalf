@@ -7,23 +7,32 @@
 console.log("what is happening")
 
 let config = {
-
-    type: Phaser.CANVAS,
+    type: Phaser.AUTO,
     width: 640,
     height: 480,
-    physics: {
-        default: "arcade",
-        arcade: { debug: true }
+    render: {
+        pixelArt: true
     },
-    scene: [Scene1, Scene2, Scene3, Test4]
+    physics: {
+        default: 'arcade',
+        arcade: {
+            // debug: true,
+            gravity: {
+                x: 0,
+                y: 0
+            }
+        }
+    },
 
+    // TODO: MENU IS DONE; JUST NEED TO ADD INTO THIS LIST
+    scene: [Scene1, Scene2, Scene3], //add menu later
 }
 
 let game = new Phaser.Game(config);
 
 // reserve keyboard vars
 
-let keyF, keyR, keyLEFT, keyRIGHT, keyDOWN, clickLeft;
+let keyF, keyR, keyLEFT, keyRIGHT, keyDOWN, keyUP, clickLeft;
 
 // set UI
 
