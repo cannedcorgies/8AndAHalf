@@ -1,14 +1,12 @@
-// Rocket prefab
+// Border
 
 //// NOTES ///////////
-
-// ground-pounding is giving an INSANE amound of points
-    // collision doesn't disable ship sprite - there is some
-    // latency before it resets to right of screen
-
+//
+//
+//
 //////////////////////
 
-class Guido extends Phaser.GameObjects.Sprite {
+class Center extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y, texture, frame) {
 
@@ -24,7 +22,7 @@ class Guido extends Phaser.GameObjects.Sprite {
 
         // physics variables
 
-            this.ACCELERATION = 8000;            // rate of change
+            this.ACCELERATION = 20000;            // rate of change
             this.MAX_X_VEL = 20000;              // as fast as it can go on x axis
             this.MAX_Y_VEL = 20000;              // as fast on y axis
             this.GROUND_DRAG = 500;            // slow-down rate
@@ -36,17 +34,15 @@ class Guido extends Phaser.GameObjects.Sprite {
 
         // set up physics sprite
 
-            this.body.setBounce(0.85);                                       // mutable - just a bit of character - slight reaction to landing
+            // this.body.setBounce(0.2);                                       // mutable - just a bit of character - slight reaction to landing
             this.body.setSize(this.width/2);                                // physics size
             this.body.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);       // sets limits to speed
             this.body.setCollideWorldBounds(true);                          // can't exit world
-
-
-        // checks
-
-            this.glidable = false;      // simple boolean for whether or not glide available
-            this.grounded = false;
         
+            // overlap check
+
+            this.colliding = false;
+
         // final check
             // console.log("from Player.js: constructed!");
 
@@ -56,24 +52,7 @@ class Guido extends Phaser.GameObjects.Sprite {
 
         // checks
 
-        /*if (this.body.blocked.down) {   // if on ground..
-
-            this.glidable = false;      // gliding not possible
-            this.grounded = true;       // grounded
-
-            this.body.setDragX(this.GROUND_DRAG);   // more immediate deceleration
-
-        } else {                        // otherwise..
-
-            this.grounded = false;      // NOT on ground
-
-            this.body.setDragX(this.AIR_DRAG);  // less control on ground
-
-        }*/
-
-        // movement
-
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {           // moving left
+        /*if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {           // moving left
 
             this.body.setAccelerationX(-this.ACCELERATION);
         
@@ -89,16 +68,48 @@ class Guido extends Phaser.GameObjects.Sprite {
 
             this.body.setAccelerationY(this.ACCELERATION);
         
-        }  else {                          // idle
+        }  else {                          // idle */
 
-            this.body.setAccelerationX(0);      // cut acceleration
-            this.body.setAccelerationY(0);      // delete this for cool gravity thing
+        this.body.setAccelerationX(0);      // cut acceleration
+        this.body.setAccelerationY(0);      // delete this for cool gravity thing
             
-            this.body.setDragX(this.GROUND_DRAG);      // but don't cut immediately
-            this.body.setDragY(this.GROUND_DRAG);
+        this.body.setDragX(this.GROUND_DRAG);      // but don't cut immediately
+        this.body.setDragY(this.GROUND_DRAG);
 
-        }
+        
 
+
+    }
+
+    moveRight() {
+
+        console.log("collided with right");
+        //this.body.setAccelerationX(this.ACCELERATION);
+        this.body.setVelocityX(100);
+
+    }
+
+    moveLeft() {
+
+        console.log("collided with left");
+        //this.body.setAccelerationX(this.ACCELERATION);
+        this.body.setVelocityX(-100);
+
+    }
+
+    moveUp() {
+
+        console.log("collided with up");
+        //this.body.setAccelerationX(this.ACCELERATION);
+        this.body.setVelocityY(-100);
+
+    }
+
+    moveDown() {
+
+        console.log("collided with down");
+        //this.body.setAccelerationX(this.ACCELERATION);
+        this.body.setVelocityY(100);
 
     }
 
