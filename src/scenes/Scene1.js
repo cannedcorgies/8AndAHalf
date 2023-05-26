@@ -25,11 +25,22 @@ class Scene1 extends Phaser.Scene {
       keyUP = 
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
 
+      // camera
+
+      this.camera1 = this.cameras.main;
+      this.camera1.setBackgroundColor('rgba(135, 135, 135, 1)');  // gray
+
       
-      this.center = new Center(this, game.config.width/2, game.config.height/2, 'carl')
-      this.center.alpha = 0;
+      // objects
+
+        // guido
       this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car').setOrigin(0.5, 0);
 
+        // box
+      this.center = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0);    // center for walls to follow
+      this.center.alpha = 0;
+
+            // walls
       this.someWall = new BorderRight(this, this.center.x + 50, this.center.y, 'borderVert', this.guido, this.center).setOrigin(0.5, 0);
       this.physics.add.collider(this.guido, this.someWall, this.moveRight, null, this);
 
@@ -42,14 +53,68 @@ class Scene1 extends Phaser.Scene {
       this.someWallDown = new BorderDown(this, this.center.x - 50, this.center.y, 'borderHoriz', this.guido, this.center).setOrigin(0.5, 0);
       this.physics.add.collider(this.guido, this.someWallDown, this.moveDown, null, this);
 
+      // UI - configurations
+      let uiConfig = {
+
+        fontFamily: 'Courier',
+        fontSize: '28px',
+        backgroundColor: '#000000',
+        color: '#ff0000',
+        align: 'right',
+        padding: {
+
+            top: 5,
+            bottom: 5,
+
+        },
+        fixedWidth: 100
+
+      }
+
+      // clock
+      this.gameOver = false;      // flag for game over state
+      this.chillinTime = 56000;
+      this.chillin = false;
+      this.panicAttackTime = 54000;
+      this.panicAttack = false;
+
+      uiConfig.fixedWidth = 0;
+      this.clock = this.time.delayedCall(this.chillinTime, () => {
+
+        this.chillin = false;
+        this.panicAttack = true;
+        this.startPanicAttack();
+
+      }, null, this);
+
+        // UI - clock
+      this.remainingTime = 0;
+      this.clockUI = this.add.text(game.config.width/2, borderUISize + borderPadding*2, this.remainingTime, uiConfig).setOrigin(0, 0);
+      this.clockUI.alpha = 0;
+
     }
 
     update() {
 
-      //Phaser.Physics.Arcade.ArcadePhysics.collide(this.guido, this.someWall, this.center.moveRight());
+      //console.log("from Scene1.js: from update(): remaining time:", Math.floor(this.clock.getRemainingSeconds()));
+      // clock ui update
+      if (this.panicAttack) {
 
+        this.clockUI.alpha = 1;
+        this.remainingTime = Math.floor(this.clock.getRemainingSeconds());
+        this.clockUI.text = this.remainingTime;
+
+      }
+
+      if (this.gameOver) {
+        this.scene.start("scene2");
+      }
+
+      // character movement
       this.guido.update();
       
+
+      // walls deceleration
       this.someWall.update();
       this.someWallLeft.update();
       this.someWallUp.update();
@@ -58,9 +123,15 @@ class Scene1 extends Phaser.Scene {
 
     }
 
-    someFunction() {
+    startPanicAttack() {
 
+      console.log("from Scene1.js: from startPanicAttack(): panic attack started");
 
+      this.clock = this.time.delayedCall(this.panicAttackTime, () => {
+
+        this.gameOver = true;
+
+      }, null, this);
 
     }
 
