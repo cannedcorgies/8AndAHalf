@@ -121,6 +121,8 @@ class Scene1 extends Phaser.Scene {
     }
 
     update() {
+      //this.camera.shake(100, this.shake)
+      this.camera1.shake(100, 0.0008)
 
       // clock ui update
       if (this.panicAttack) {
