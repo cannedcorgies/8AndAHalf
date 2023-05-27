@@ -10,7 +10,7 @@ class BorderUp extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y, texture, guido, center, frame) {
 
-        console.log("from Guido.js: constructing...");
+        console.log("from BorderUp.js: constructing...");
 
         super(scene, x, y, texture, frame);     // inherit or somethin'
         this.parentScene = scene;               // save scene for later

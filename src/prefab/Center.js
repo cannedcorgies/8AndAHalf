@@ -10,7 +10,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y, texture, frame) {
 
-        console.log("from Guido.js: constructing...");
+        console.log("from Center.js: constructing...");
 
         super(scene, x, y, texture, frame);     // inherit or somethin'
         this.parentScene = scene;               // save scene for later
@@ -52,24 +52,6 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
         // checks
 
-        /*if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {           // moving left
-
-            this.body.setAccelerationX(-this.ACCELERATION);
-        
-        } else if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {   // moving right
-
-            this.body.setAccelerationX(this.ACCELERATION);
-        
-        } else if (Phaser.Input.Keyboard.JustDown(keyUP)) {  
-
-            this.body.setAccelerationY(-this.ACCELERATION);
-        
-        } else if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {  
-
-            this.body.setAccelerationY(this.ACCELERATION);
-        
-        }  else {                          // idle */
-
         this.body.setAccelerationX(0);      // cut acceleration
         this.body.setAccelerationY(0);      // delete this for cool gravity thing
             
@@ -83,33 +65,45 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
     moveRight() {
 
-        console.log("collided with right");
-        //this.body.setAccelerationX(this.ACCELERATION);
-        this.body.setVelocityX(100);
+        if (!this.parentScene.free) {
+
+            console.log("collided with right");
+            this.body.setVelocityX(100);
+
+        }
 
     }
 
     moveLeft() {
 
-        console.log("collided with left");
-        //this.body.setAccelerationX(this.ACCELERATION);
-        this.body.setVelocityX(-100);
+        if (!this.parentScene.free) {
+
+            console.log("collided with left");
+            this.body.setVelocityX(-100);
+
+        }
 
     }
 
     moveUp() {
 
-        console.log("collided with up");
-        //this.body.setAccelerationX(this.ACCELERATION);
-        this.body.setVelocityY(-100);
+        if (!this.parentScene.free) {
+
+            console.log("collided with up");
+            this.body.setVelocityY(-100);
+
+        }
 
     }
 
     moveDown() {
 
-        console.log("collided with down");
-        //this.body.setAccelerationX(this.ACCELERATION);
-        this.body.setVelocityY(100);
+        if (!this.parentScene.free) {
+
+            console.log("collided with down");
+            this.body.setVelocityY(100);
+
+        }
 
     }
 

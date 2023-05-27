@@ -34,7 +34,7 @@ class Scene1 extends Phaser.Scene {
       // objects
 
         // guido
-      this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car').setOrigin(0.5, 0);
+      this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car', 0, 'panic attack').setOrigin(0.5, 0);
 
         // box
       this.center = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0);    // center for walls to follow
@@ -59,7 +59,7 @@ class Scene1 extends Phaser.Scene {
         fontFamily: 'Courier',
         fontSize: '28px',
         backgroundColor: '#000000',
-        color: '#ff0000',
+        color: '#ffffff',
         align: 'right',
         padding: {
 
@@ -72,11 +72,12 @@ class Scene1 extends Phaser.Scene {
       }
 
       // clock
-      this.gameOver = false;      // flag for game over state
-      this.chillinTime = 56000;
-      this.chillin = false;
-      this.panicAttackTime = 54000;
+      this.gameOver = false;          // flag for game over state
+      this.chillinTime = 5000;        // 56000 ms def;
+      this.chillin = true;
+      this.panicAttackTime = 5000;    // 54000 ms def;
       this.panicAttack = false;
+      this.free;
 
       uiConfig.fixedWidth = 0;
       this.clock = this.time.delayedCall(this.chillinTime, () => {
@@ -104,6 +105,10 @@ class Scene1 extends Phaser.Scene {
         this.remainingTime = Math.floor(this.clock.getRemainingSeconds());
         this.clockUI.text = this.remainingTime;
 
+        if (this.remainingTime <= 10) {
+          this.clockUI.setColor("#ff0000");
+        }
+
       }
 
       if (this.gameOver) {
@@ -129,7 +134,11 @@ class Scene1 extends Phaser.Scene {
 
       this.clock = this.time.delayedCall(this.panicAttackTime, () => {
 
-        this.gameOver = true;
+        this.someWallUp.destroy();
+        this.clockUI.alpha = 0;
+
+        this.panicAttack = false;
+        this.free = true;
 
       }, null, this);
 
