@@ -34,7 +34,7 @@ class Scene1 extends Phaser.Scene {
       // objects
 
         // guido
-      this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car', 0, 'panic attack').setOrigin(0.5, 0);
+      this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car', 0, 'panicAttack').setOrigin(0.5, 0);
 
         // box
       this.center = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0);    // center for walls to follow
@@ -97,7 +97,6 @@ class Scene1 extends Phaser.Scene {
 
     update() {
 
-      //console.log("from Scene1.js: from update(): remaining time:", Math.floor(this.clock.getRemainingSeconds()));
       // clock ui update
       if (this.panicAttack) {
 
@@ -139,6 +138,8 @@ class Scene1 extends Phaser.Scene {
 
         this.panicAttack = false;
         this.free = true;
+
+        this.guido.setPhysicsState("free");
 
       }, null, this);
 

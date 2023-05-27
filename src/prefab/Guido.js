@@ -30,51 +30,26 @@ class Guido extends Phaser.GameObjects.Sprite {
             this.max_y_vel = 0;
             this.ground_drag = 0;
 
-            console.log("--> acceleration:", this.acceleration);
-            console.log("--> maxx:", this.max_x_vel);
-            console.log("--> maxy:", this.max_y_vel);
-            console.log("--> drag:", this.ground_drag);
-
             // panic attack
-            this.ACCELERATION_PANIC = 8000;            // rate of change
-            this.MAX_X_VEL_PANIC = 20000;              // as fast as it can go on x axis
-            this.MAX_Y_VEL_PANIC = 20000;              // as fast on y axis
-            this.GROUND_DRAG_PANIC = 500;              // slow-down rate
 
-            // free attack
-            this.ACCELERATION_FREE = 8000;            // rate of change
-            this.MAX_X_VEL_FREE = 20000;              // as fast as it can go on x axis
-            this.MAX_Y_VEL_FREE = 20000;              // as fast on y axis
-            this.GROUND_DRAG_FREE = 500;              // slow-down rate
+            this.states = {panicAttack: false, free: false, controlOff: false};
+            this.myPhysics = {
 
-            // ignore
-            this.activated = false;              // ignore - for own testing
+                // cutscene
+                cutscene: {acceleration: 0, max_x_vel: 0, max_y_vel: 0, ground_drag: 0},
 
-        
-        // physics states
+                // scene 1 states
+                panicAttack: {acceleration: 8000, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
+                free: {acceleration: 500, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
+                controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500}
 
-            if (state == 'panic attack') {
-
-                console.log(" --> panic state should've been set..");
-
-                this.acceleration = this.ACCELERATION_PANIC + 0;
-                this.max_x_vel = this.MAX_X_VEL_PANIC + 0;
-                this.max_y_vel = this.MAX_Y_VEL_PANIC + 0;
-                this.ground_drag = this.GROUND_DRAG_PANIC + 0;
-
-                console.log("--> acceleration:", this.acceleration);
-                console.log("--> maxx:", this.max_x_vel);
-                console.log("--> maxy:", this.max_y_vel);
-                console.log("--> drag:", this.ground_drag);
-
-            } else if (state == 'free') {
-
-                this.acceleration = this.ACCELERATION_FREE;
-                this.max_x_vel = this.MAX_X_VEL_FREE;
-                this.max_y_vel = this.MAX_Y_VEL_FREE;
-                this.ground_drag = this.GROUND_DRAG_FREE;
+                // scene 2 states
 
             }
+
+            this.activated = false;              // ignore - for own testing
+
+            this.setPhysicsState(state);
 
 
         // set up physics sprite
@@ -92,15 +67,9 @@ class Guido extends Phaser.GameObjects.Sprite {
 
         // checks
 
-        if (this.parentScene.chillin || this.parentScene.panicAttack) {
+        if (this.states.panicAttack) {
         
             if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {           // moving left
-
-                console.log("from guido.js: from update(): move left dammit!");
-                console.log("--> acceleration:", this.acceleration);
-                console.log("--> maxx:", this.max_x_vel);
-                console.log("--> maxy:", this.max_y_vel);
-                console.log("--> drag:", this.ground_drag);
 
                 this.body.setAccelerationX(-this.acceleration);
             
@@ -126,7 +95,9 @@ class Guido extends Phaser.GameObjects.Sprite {
 
             }
 
-        }   else if (this.parentScene.free) {
+        }   else if (this.states.free) {
+
+            this.body.setBounce(0); 
 
             if (keyLEFT.isDown) {           // moving left
 
@@ -139,6 +110,7 @@ class Guido extends Phaser.GameObjects.Sprite {
             } else if (Phaser.Input.Keyboard.JustDown(keyUP)) {  
 
                 this.body.setAccelerationY(-this.acceleration);
+                this.setPhysicsState("controlOff");
             
             } else if (keyDOWN.isDown) {  
 
@@ -159,21 +131,39 @@ class Guido extends Phaser.GameObjects.Sprite {
 
     }
 
-    statePanic() {
+    
+    resetStates() {
 
-        this.acceleration = this.ACCELERATION_PANIC;
-        this.max_x_vel = this.MAX_X_VEL_PANIC;
-        this.max_y_vel = this.MAX_Y_VEL_PANIC;
-        this.ground_drag = this.GROUND_DRAG_PANIC;
+        let keys = Object.keys(this.states);        // array of keys
+
+        for (let i = 0; i < keys.length; i++) {     // loop through properties by name
+            this.states[keys[i]] = false;
+        }
 
     }
 
-    stateFree() {
 
-        this.acceleration = this.ACCELERATION_PANIC;
-        this.max_x_vel = this.MAX_X_VEL_PANIC;
-        this.max_y_vel = this.MAX_Y_VEL_PANIC;
-        this.ground_drag = this.GROUND_DRAG_PANIC;
+    setPhysicsState(state) {
+
+        if (state in this.states === false) {
+
+            console.log("==============from Guido.js: from setPhysicsState: invalid state!==============");
+            return
+
+        }
+
+        this.resetStates();
+        this.states[state] = true;
+
+        let physicsState = this.myPhysics[state];
+
+        console.log("from Guido.js: from setPhysicsState: current physics:", state);
+        console.log("   -->", physicsState);
+
+        this.acceleration = physicsState.acceleration;
+        this.max_x_vel = physicsState.max_x_vel;
+        this.max_y_vel = physicsState.max_y_vel;
+        this.ground_drag = physicsState.ground_drag;
 
     }
 
