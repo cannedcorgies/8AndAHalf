@@ -9,8 +9,12 @@ class Scene1 extends Phaser.Scene {
     preload() {
         
       this.load.image('car', './assets/car.png');
+
       this.load.image('borderVert', './assets/borderVertical.png');
       this.load.image('borderHoriz', './assets/borderHorizontal.png');
+
+      this.load.image('cameraBorderVert', './assets/cameraBorder_vertical.png');
+      this.load.image('cameraBorderHoriz', './assets/cameraBorder_horizontal.png');
 
     }
   
@@ -53,6 +57,18 @@ class Scene1 extends Phaser.Scene {
       this.someWallDown = new BorderDown(this, this.center.x - 50, this.center.y, 'borderHoriz', this.guido, this.center).setOrigin(0.5, 0);
       this.physics.add.collider(this.guido, this.someWallDown, this.moveDown, null, this);
 
+        // camera bounds
+      this.cameraBorder_top = new CameraBorder(this, 0, 0, 'cameraBorderHoriz', this.center, this.camera1, 'top');
+      
+      this.cameraBorder_bottom = new CameraBorder(this, 0, 0, 'cameraBorderHoriz', this.center, this.camera1, 'bottom');
+      
+      this.cameraBorder_left = new CameraBorder(this, 0, 0, 'cameraBorderVert', this.center, this.camera1, 'left');
+      
+      this.cameraBorder_right = new CameraBorder(this, 0, 0, 'cameraBorderVert', this.center, this.camera1, 'right');
+      
+      this.cameraBounds = [this.cameraBorder_top, this.cameraBorder_bottom, this.cameraBorder_left, this.cameraBorder_right];
+
+
       // UI - configurations
       let uiConfig = {
 
@@ -71,11 +87,11 @@ class Scene1 extends Phaser.Scene {
 
       }
 
-      // clock
+        // clock
       this.gameOver = false;          // flag for game over state
-      this.chillinTime = 5000;        // 56000 ms def;
+      this.chillinTime = 1000;        // 56000 ms def;
       this.chillin = true;
-      this.panicAttackTime = 5000;    // 54000 ms def;
+      this.panicAttackTime = 54000;    // 54000 ms def;
       this.panicAttack = false;
       this.free;
 
@@ -92,6 +108,15 @@ class Scene1 extends Phaser.Scene {
       this.remainingTime = 0;
       this.clockUI = this.add.text(game.config.width/2, borderUISize + borderPadding*2, this.remainingTime, uiConfig).setOrigin(0, 0);
       this.clockUI.alpha = 0;
+      this.clockUI.setScrollFactor(0);
+
+
+      // cutaways
+      this.cutaway = 0;
+      this.cutawayDistances = [9000, 18000, 10000];
+      this.zoomie = 0.3;
+
+      this.zoom();
 
     }
 
@@ -131,10 +156,18 @@ class Scene1 extends Phaser.Scene {
 
       console.log("from Scene1.js: from startPanicAttack(): panic attack started");
 
+      this.cutawayNext();
+
       this.clock = this.time.delayedCall(this.panicAttackTime, () => {
 
+        this.camera1.setZoom(1.0);
+        
         this.someWallUp.destroy();
         this.clockUI.alpha = 0;
+
+        for (let i = 0; i < this.cameraBounds.length; i++) {
+          this.cameraBounds[i].destroy();
+        }
 
         this.panicAttack = false;
         this.free = true;
@@ -145,28 +178,79 @@ class Scene1 extends Phaser.Scene {
 
     }
 
+    cutawayNext() {
+
+      if (this.cutaway < 3) {
+
+        this.cutaway += 1;
+
+        let next = this.time.delayedCall(this.cutawayDistances[this.cutaway - 1], () => {
+
+          this.zoom();
+          this.cutawayNext();
+  
+        }, null, this);
+
+      }
+
+    }
+
+    zoom() {
+
+      let zoomQuant = this.cutaway * this.zoomie;
+
+      let pastDistanceX = this.center.x - this.guido.x;
+      let pastDistanceY = this.center.y - this.guido.y;
+
+      this.center.x = game.config.width/2;
+      this.center.y = game.config.height/2;
+      this.guido.x = this.center.x - pastDistanceX;
+      this.guido.y = this.center.y - pastDistanceY;
+
+      console.log("from Scene1.js: from zoom(): closing in camera...");
+      this.camera1.startFollow(this.center);
+      this.camera1.stopFollow();
+      this.camera1.setZoom(1.0 + (zoomQuant));
+
+      console.log("   --> display width:", this.camera1.displayWidth);
+      console.log("   --> display height:", this.camera1.displayHeight);
+
+      if (this.cutaway > 0) {
+
+        for (let i = 0; i < this.cameraBounds.length; i++) {
+          this.cameraBounds[i].displacementUpdate(zoomQuant);
+          //console.log("from Scene1.js: from zoom(): updating a bound")
+        }
+
+      }
+
+      this.clockUI.y = this.cameraBorder_top.y + 10;
+      this.clockUI.x = this.center.x;
+
+    }
+
     moveRight() {
 
 
-      if (this.someWall.x < game.config.width) { this.center.moveRight(); }
+      if (this.someWall.x <= this.cameraBorder_right.x) { this.center.moveRight(); }
 
     }
 
     moveLeft() {
 
-      if (this.someWallLeft.x >= 0) { this.center.moveLeft(); }
+      if (this.someWallLeft.x >= this.cameraBorder_left.x) { this.center.moveLeft(); }
 
     }
 
     moveUp() {
 
-      if (this.someWallUp.y >= 0) { this.center.moveUp(); }
+      if (this.someWallUp.y >= this.cameraBorder_top.y) { this.center.moveUp(); }
 
     }
 
     moveDown() {
 
-      if (this.someWallDown.y < game.config.height) { this.center.moveDown(); }
+      if (this.someWallDown.y < this.cameraBorder_bottom.y) { this.center.moveDown(); }
 
     }
 

@@ -30,6 +30,8 @@ class Center extends Phaser.Physics.Arcade.Sprite {
             this.JUMP_VELOCITY = -1000;         // jump power!
             this.GLIDE_VELOCITY = 150;
 
+            this.bounce = 200;
+
             this.activated = false;         // ignore - for own testing
 
         // set up physics sprite
@@ -68,7 +70,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
         if (!this.parentScene.free) {
 
             console.log("collided with right");
-            this.body.setVelocityX(100);
+            this.body.setVelocityX(this.bounce);
 
         }
 
@@ -79,7 +81,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
         if (!this.parentScene.free) {
 
             console.log("collided with left");
-            this.body.setVelocityX(-100);
+            this.body.setVelocityX(-this.bounce);
 
         }
 
@@ -90,7 +92,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
         if (!this.parentScene.free) {
 
             console.log("collided with up");
-            this.body.setVelocityY(-100);
+            this.body.setVelocityY(-this.bounce);
 
         }
 
@@ -101,7 +103,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
         if (!this.parentScene.free) {
 
             console.log("collided with down");
-            this.body.setVelocityY(100);
+            this.body.setVelocityY(this.bounce);
 
         }
 
