@@ -16,6 +16,11 @@ class Scene1 extends Phaser.Scene {
       this.load.image('cameraBorderVert', './assets/cameraBorder_vertical.png');
       this.load.image('cameraBorderHoriz', './assets/cameraBorder_horizontal.png');
 
+      this.load.image('bus', './assets/bus.png');
+      this.load.image('manInCar', './assets/manInCar.png');
+      this.load.image('oldManAndLady', './assets/oldManAndLady.png');
+      this.load.image('others', './assets/others.png');
+
     }
   
     create() { 
@@ -33,6 +38,8 @@ class Scene1 extends Phaser.Scene {
 
       this.camera1 = this.cameras.main;
       this.camera1.setBackgroundColor('rgba(135, 135, 135, 1)');  // gray
+      this.worldCenter = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0.5);
+      this.camera1.startFollow(this.worldCenter);
 
       
       // objects
@@ -41,8 +48,8 @@ class Scene1 extends Phaser.Scene {
       this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car', 0, 'panicAttack').setOrigin(0.5, 0);
 
         // box
-      this.center = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0);    // center for walls to follow
-      this.center.alpha = 0;
+      this.center = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0.5);    // center for walls to follow
+      //this.center.alpha = 0;
 
             // walls
       this.someWall = new BorderRight(this, this.center.x + 50, this.center.y, 'borderVert', this.guido, this.center).setOrigin(0.5, 0);
@@ -68,6 +75,18 @@ class Scene1 extends Phaser.Scene {
       
       this.cameraBounds = [this.cameraBorder_top, this.cameraBorder_bottom, this.cameraBorder_left, this.cameraBorder_right];
 
+        // cutaways
+      this.bus = this.add.image(game.config.width/2, game.config.height/2, 'bus');
+        this.bus.alpha = 0;
+      this.manInCar = this.add.image(game.config.width/2, game.config.height/2, 'manInCar');
+        this.manInCar.alpha = 0;
+      this.oldManAndLady = this.add.image(game.config.width/2, game.config.height/2, 'oldManAndLady');
+        this.oldManAndLady.alpha = 0;
+      this.others = this.add.image(game.config.width/2, game.config.height/2, 'others');
+        this.others.alpha = 0;
+
+      this.cutawayImages = [this.bus, this.manInCar, this.oldManAndLady, this.others];
+
 
       // UI - configurations
       let uiConfig = {
@@ -89,7 +108,7 @@ class Scene1 extends Phaser.Scene {
 
         // clock
       this.gameOver = false;          // flag for game over state
-      this.chillinTime = 1000;        // 56000 ms def;
+      this.chillinTime = 56000;        // 56000 ms def;
       this.chillin = true;
       this.panicAttackTime = 54000;    // 54000 ms def;
       this.panicAttack = false;
@@ -114,6 +133,7 @@ class Scene1 extends Phaser.Scene {
       // cutaways
       this.cutaway = 0;
       this.cutawayDistances = [9000, 18000, 10000];
+      this.cutawayTime = [2000, 2000, 2000]
       this.zoomie = 0.3;
 
       this.zoom();
@@ -127,7 +147,6 @@ class Scene1 extends Phaser.Scene {
       // clock ui update
       if (this.panicAttack) {
 
-        this.clockUI.alpha = 1;
         this.remainingTime = Math.floor(this.clock.getRemainingSeconds());
         this.clockUI.text = this.remainingTime;
 
@@ -135,7 +154,7 @@ class Scene1 extends Phaser.Scene {
           this.clockUI.setColor("#ff0000");
         }
 
-      }
+      } else { this.clockUI.alpha = 0; }
 
       if (this.gameOver) {
         this.scene.start("scene2");
@@ -175,6 +194,7 @@ class Scene1 extends Phaser.Scene {
         this.free = true;
 
         this.guido.setPhysicsState("free");
+        this.guido.body.setCollideWorldBounds(false);
 
       }, null, this);
 
@@ -182,18 +202,57 @@ class Scene1 extends Phaser.Scene {
 
     cutawayNext() {
 
-      if (this.cutaway < 3) {
+      console.log("from Scene1.js: from cutawayNext(): called!");
+
+      if (this.cutaway <= 3) {
 
         this.cutaway += 1;
+      
+        if (this.cutaway == 1) { 
 
-        let next = this.time.delayedCall(this.cutawayDistances[this.cutaway - 1], () => {
+          console.log("   --> first one");
 
-          this.zoom();
-          this.cutawayNext();
-  
-        }, null, this);
+          this.clockUI.alpha = 1;
+          this.cueCam();
+
+        } else {
+
+          this.camera1.setZoom(1.0);
+          
+          console.log("   --> NOT first one");
+
+          this.cutawayImages[this.cutaway - 2].alpha = 1;
+          this.clockUI.alpha = 0;
+
+          let next = this.time.delayedCall(this.cutawayTime[this.cutaway - 2], () => {
+
+            this.cutawayImages[this.cutaway - 2].alpha = 0;
+            this.clockUI.alpha = 1;
+            
+            this.cueCam();
+    
+          }, null, this);
+        }
 
       }
+
+    }
+
+    cueCam() {
+
+      console.log("from Scene1.js: from cueCam(): called!");
+
+      if (this.cutaway != 1) {
+        let zoomQuant = (this.cutaway-1) * this.zoomie;
+        this.camera1.setZoom(1.0 + (zoomQuant));
+      }
+
+      let next = this.time.delayedCall(this.cutawayDistances[this.cutaway - 1], () => {
+
+        this.zoom();
+        this.cutawayNext();
+
+      }, null, this);
 
     }
 
@@ -210,14 +269,12 @@ class Scene1 extends Phaser.Scene {
       this.guido.y = this.center.y - pastDistanceY;
 
       console.log("from Scene1.js: from zoom(): closing in camera...");
-      this.camera1.startFollow(this.center);
-      this.camera1.stopFollow();
       this.camera1.setZoom(1.0 + (zoomQuant));
 
       console.log("   --> display width:", this.camera1.displayWidth);
       console.log("   --> display height:", this.camera1.displayHeight);
 
-      if (this.cutaway > 0) {
+      if (this.cutaway >= 1) {
 
         for (let i = 0; i < this.cameraBounds.length; i++) {
           this.cameraBounds[i].displacementUpdate(zoomQuant);

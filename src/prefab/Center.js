@@ -32,7 +32,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
             this.bounce = 200;
 
-            this.activated = false;         // ignore - for own testing
+            this.activated = true;         // ignore - for own testing
 
         // set up physics sprite
 
@@ -47,6 +47,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
         // final check
             // console.log("from Player.js: constructed!");
+            this.alpha = 0;
 
     }
 
@@ -67,7 +68,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
     moveRight() {
 
-        if (!this.parentScene.free) {
+        if (!this.parentScene.free && this.activated) {
 
             console.log("collided with right");
             this.body.setVelocityX(this.bounce);
@@ -78,7 +79,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
     moveLeft() {
 
-        if (!this.parentScene.free) {
+        if (!this.parentScene.free && this.activated) {
 
             console.log("collided with left");
             this.body.setVelocityX(-this.bounce);
@@ -89,7 +90,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
     moveUp() {
 
-        if (!this.parentScene.free) {
+        if (!this.parentScene.free && this.activated) {
 
             console.log("collided with up");
             this.body.setVelocityY(-this.bounce);
@@ -100,7 +101,7 @@ class Center extends Phaser.Physics.Arcade.Sprite {
 
     moveDown() {
 
-        if (!this.parentScene.free) {
+        if (!this.parentScene.free && this.activated) {
 
             console.log("collided with down");
             this.body.setVelocityY(this.bounce);

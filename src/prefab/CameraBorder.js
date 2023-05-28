@@ -32,10 +32,10 @@ class CameraBorder extends Phaser.Physics.Arcade.Sprite {
         // displacements
 
         this.displacements = {
-                top: [this.center.x, this.center.y - this.camera.displayHeight/2],
-                bottom: [this.center.x, this.center.y + this.camera.displayHeight/2],
-                left: [this.center.x - this.camera.displayWidth/2, this.center.y],
-                right: [this.center.x + this.camera.displayWidth/2, this.center.y]
+                top: [game.config.width/2, game.config.height/2 - this.camera.displayHeight/2],
+                bottom: [game.config.width/2, game.config.height/2 + this.camera.displayHeight/2],
+                left: [game.config.width/2 - this.camera.displayWidth/2, game.config.height/2],
+                right: [game.config.width/2 + this.camera.displayWidth/2, game.config.height/2]
         }
 
         this.activeDisplacement = this.displacements[this.side];
@@ -48,7 +48,7 @@ class CameraBorder extends Phaser.Physics.Arcade.Sprite {
 
         // final check
         
-            this.alpha = 0;
+            // this.alpha = 0;
             // console.log("from Player.js: constructed!");
 
     }
