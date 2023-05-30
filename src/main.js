@@ -25,7 +25,7 @@ let config = {
     },
 
     // TODO: MENU IS DONE; JUST NEED TO ADD INTO THIS LIST
-    scene: [Scene1, Scene2, Scene3], //add menu later
+    scene: [Scene2_test_movement, Scene1, Scene2, Scene3], //add menu later
 }
 
 let game = new Phaser.Game(config);

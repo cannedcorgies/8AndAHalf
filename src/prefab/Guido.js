@@ -10,7 +10,7 @@
 
 class Guido extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, texture, frame, state) {
+    constructor(scene, x, y, texture, frame, state, box = null) {
 
         console.log("from Guido.js: constructing...");
 
@@ -32,7 +32,7 @@ class Guido extends Phaser.GameObjects.Sprite {
 
             // panic attack
 
-            this.states = {panicAttack: false, free: false, controlOff: false};
+            this.states = {panicAttack: false, free: false, controlOff: false, suspended: false};
             this.myPhysics = {
 
                 // cutscene
@@ -41,7 +41,10 @@ class Guido extends Phaser.GameObjects.Sprite {
                 // scene 1 states
                 panicAttack: {acceleration: 8000, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
                 free: {acceleration: 500, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
-                controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500}
+                controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
+               
+                // scene 2 states
+                suspended: {acceleration: 2000, max_x_vel: 2000, max_y_vel: 2000, ground_drag: 500}
 
                 // scene 2 states
 
@@ -57,6 +60,12 @@ class Guido extends Phaser.GameObjects.Sprite {
             this.body.setBounce(0.85);                                       // mutable - just a bit of character - slight reaction to landing
             this.body.setMaxVelocity(this.max_x_vel, this.max_y_vel);       // sets limits to speed
             this.body.setCollideWorldBounds(true);                          // can't exit world
+
+
+        // state variables
+            this.bouncing = false;
+            this.box = box;
+
         
         // final check
             // console.log("from Player.js: constructed!");
@@ -123,6 +132,31 @@ class Guido extends Phaser.GameObjects.Sprite {
                 
                 this.body.setDragX(this.ground_drag);      // but don't cut immediately
                 this.body.setDragY(this.ground_drag);
+
+            }
+
+        } else if (this.states.suspended) {
+
+            this.body.setBounce(0.15);
+
+            if (this.bouncing) {
+
+                console.log("from Guido: from update(): from suspended state: done bouncing");
+
+                if (this.body.velocity.x == 0 && this.body.velocity.y == 0) {
+                    this.bouncing = false;
+                }
+
+                this.body.setAccelerationX(0);      // cut acceleration
+                this.body.setAccelerationY(0);      // delete this for cool gravity thing
+                
+                this.body.setDragX(this.ground_drag);      // but don't cut immediately
+                this.body.setDragY(this.ground_drag);
+
+            } else {
+
+                this.x = this.box.x;
+                this.y = this.box.y;
 
             }
 
