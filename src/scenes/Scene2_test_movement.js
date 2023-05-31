@@ -50,7 +50,7 @@ class Scene2_test_movement extends Phaser.Scene {
         this.man = new Dummy_Man(this, game.config.width/2, game.config.height/2 - 100, 'car').setOrigin(0.5, 0.5);
         this.woman = new Dummy_Woman(this, game.config.width/2, game.config.height/2 + 150, 'someSprite').setOrigin(0.5, 0.5);
 
-        this.physics.add.collider(this.box, this.man);
+        this.physics.add.collider(this.box, this.man, this.stopGuidoBouncing, null, this);
         this.physics.add.collider(this.guido, this.woman, this.setGuidoBouncing, null, this);
 
     }
@@ -65,6 +65,18 @@ class Scene2_test_movement extends Phaser.Scene {
     setGuidoBouncing() {
 
         this.guido.bouncing = true;
+        
+        let next = this.time.delayedCall(3000, () => {
+
+            this.guido.bouncing = false;
+    
+        }, null, this);
+
+    }
+
+    stopGuidoBouncing() {
+
+        this.guido.bouncing = false;
 
     }
 

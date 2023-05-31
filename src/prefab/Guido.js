@@ -44,7 +44,7 @@ class Guido extends Phaser.GameObjects.Sprite {
                 controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
                
                 // scene 2 states
-                suspended: {acceleration: 2000, max_x_vel: 2000, max_y_vel: 2000, ground_drag: 500}
+                suspended: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 500}
 
                 // scene 2 states
 
@@ -137,7 +137,7 @@ class Guido extends Phaser.GameObjects.Sprite {
 
         } else if (this.states.suspended) {
 
-            this.body.setBounce(0.15);
+            this.body.setBounce(3);
 
             if (this.bouncing) {
 
@@ -156,7 +156,7 @@ class Guido extends Phaser.GameObjects.Sprite {
             } else {
 
                 this.x = this.box.x;
-                this.y = this.box.y;
+                this.y = this.box.y - 10;
 
             }
 
