@@ -33,7 +33,7 @@ class Box extends Phaser.GameObjects.Sprite {
 
                 cutscene: {acceleration: 0, max_x_vel: 0, max_y_vel: 0, ground_drag: 0},
 
-                default: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 500},
+                default: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 2500},
 
             }
 
@@ -63,52 +63,35 @@ class Box extends Phaser.GameObjects.Sprite {
 
         if (this.states.default) {
 
-            if (this.guido.bouncing) {
+            this.body.setBounce(0);
 
-                this.x = this.guido.x;
-                this.y = this.guido.y
+            if (keyLEFT.isDown) {           // moving left
 
-            } else {
-                
-                if (keyLEFT.isDown) {           // moving left
-
-                    this.body.setAccelerationX(-this.acceleration);
-                    this.guido.body.setAccelerationX(-this.guido.acceleration);      // cut acceleration                
-                
-                } else if (keyRIGHT.isDown) {   // moving right
-
-                    this.body.setAccelerationX(this.acceleration);
-                    this.guido.body.setAccelerationX(this.guido.acceleration);
-                
-                } else if (keyUP.isDown) {  
-
-                    this.body.setAccelerationY(-this.acceleration);
-                    this.guido.body.setAccelerationY(-this.guido.acceleration);
-                
-                } else if (keyDOWN.isDown) {  
-
-                    this.body.setAccelerationY(this.acceleration);
-                    this.guido.body.setAccelerationY(this.guido.acceleration);
-                
-                }  else {                          // idle
-
-                    this.body.setAccelerationX(0);      // cut acceleration
-                    this.body.setAccelerationY(0);      // delete this for cool gravity thing
-
-                    this.guido.body.setAccelerationX(0);
-                    this.guido.body.setAccelerationY(0);
-                    
-                    this.body.setDragX(this.ground_drag);      // but don't cut immediately
-                    this.body.setDragY(this.ground_drag);
-
-                    this.guido.body.setDragX(this.guido.ground_drag);
-                    this.guido.body.setDragY(this.guido.ground_drag);
-
-                }
+                this.body.setAccelerationX(-this.acceleration);
             
-            }
+            } else if (keyRIGHT.isDown) {   // moving right
 
-        }//   else if (this.states.free) {
+                this.body.setAccelerationX(this.acceleration);
+            
+            } else if (keyUP.isDown) {   // moving up
+
+                this.body.setAccelerationY(-this.acceleration);
+            
+            } else if (keyDOWN.isDown) {  
+
+                this.body.setAccelerationY(this.acceleration);
+            
+            }  else {                          // idle
+
+                this.body.setAccelerationX(0);      // cut acceleration
+                this.body.setAccelerationY(0);      // delete this for cool gravity thing
+                
+                this.body.setDragX(this.ground_drag);      // but don't cut immediately
+                this.body.setDragY(this.ground_drag);
+
+            }
+        
+        }
 
     }
 

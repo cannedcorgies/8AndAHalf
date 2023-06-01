@@ -44,7 +44,7 @@ class Guido extends Phaser.GameObjects.Sprite {
                 controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
                
                 // scene 2 states
-                suspended: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 500}
+                suspended: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 2500}
 
                 // scene 2 states
 
@@ -137,26 +137,31 @@ class Guido extends Phaser.GameObjects.Sprite {
 
         } else if (this.states.suspended) {
 
-            this.body.setBounce(3);
+            this.body.setBounce(0.2); 
 
-            if (this.bouncing) {
+            if (keyLEFT.isDown && !this.box.body.touching.left && !this.box.body.blocked.left) {           // moving left
 
-                console.log("from Guido: from update(): from suspended state: done bouncing");
+                this.body.setAccelerationX(-this.acceleration);
+            
+            } else if (keyRIGHT.isDown && !this.box.body.touching.right && !this.box.body.blocked.right) {   // moving right
 
-                if (this.body.velocity.x == 0 && this.body.velocity.y == 0) {
-                    this.bouncing = false;
-                }
+                this.body.setAccelerationX(this.acceleration);
+            
+            } else if (keyUP.isDown && !this.box.body.touching.up && !this.box.body.blocked.up) {   // moving up
+
+                this.body.setAccelerationY(-this.acceleration);
+            
+            } else if (keyDOWN.isDown && !this.box.body.touching.down && !this.box.body.blocked.down) {  
+
+                this.body.setAccelerationY(this.acceleration);
+            
+            }  else {                          // idle
 
                 this.body.setAccelerationX(0);      // cut acceleration
                 this.body.setAccelerationY(0);      // delete this for cool gravity thing
                 
                 this.body.setDragX(this.ground_drag);      // but don't cut immediately
                 this.body.setDragY(this.ground_drag);
-
-            } else {
-
-                this.x = this.box.x;
-                this.y = this.box.y - 10;
 
             }
 
