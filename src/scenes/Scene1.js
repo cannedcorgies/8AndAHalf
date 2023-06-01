@@ -108,7 +108,7 @@ class Scene1 extends Phaser.Scene {
 
         // clock
       this.gameOver = false;          // flag for game over state
-      this.chillinTime = 56000;        // 56000 ms def;
+      this.chillinTime = 15000;        // 56000 ms def;
       this.chillin = true;
       this.panicAttackTime = 54000;    // 54000 ms def;
       this.panicAttack = false;

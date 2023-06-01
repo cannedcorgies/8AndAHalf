@@ -49,7 +49,7 @@ class Scene2_test_movement extends Phaser.Scene {
         
         this.guido.box = this.box;
 
-        this.box.alpha = 0;
+        // this.box.alpha = 0;
             // OTHER box
         
         // walls
@@ -72,12 +72,14 @@ class Scene2_test_movement extends Phaser.Scene {
 
             // testing objects
         //this.man = new Dummy_Man(this, game.config.width/2, game.config.height/2 + 150, 'car').setOrigin(0.5, 0.5);
-        this.man2 = new Dummy_Man(this, game.config.width/2, game.config.height/2 - 150, 'car').setOrigin(0.5, 0.5);
-        this.woman = new Dummy_Woman(this, game.config.width/2, game.config.height/2 + 150, 'someSprite').setOrigin(0.5, 0.5);
+        //this.man2 = new Dummy_Man(this, game.config.width/2, game.config.height/2 - 150, 'car').setOrigin(0.5, 0.5);
+        this.woman = new Dummy_Woman(this, game.config.width/2, game.config.height/2 + 150, this.guido, 'someSprite').setOrigin(0.5, 0.5);
 
         //this.physics.add.collider(this.box, this.man, this.stopGuidoBouncing, null, this);
         this.physics.add.collider(this.box, this.man2, this.stopGuidoBouncing, null, this);
         this.physics.add.collider(this.guido, this.woman, this.setGuidoBouncing, null, this);
+
+        this.physics.add.overlap(this.woman, this.box, this.woman.activate);
 
     }
 
@@ -85,6 +87,10 @@ class Scene2_test_movement extends Phaser.Scene {
 
         this.box.update();
         this.guido.update();
+
+        if (this.woman.activated) { this.physics.moveToObject(this.woman, this.guido, this.woman.acceleration) };
+
+        // this.woman.update();
 
         if (this.box.body.touching.up) { console.log("---> GAHHHHHHHH!!!!!!!!!!!UPPP"); }
         if (this.box.body.touching.down) { console.log("---> GAHHHHHHHH!!!!!!!!!!!DOWNNN"); }
