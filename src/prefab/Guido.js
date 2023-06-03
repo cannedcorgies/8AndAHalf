@@ -66,6 +66,8 @@ class Guido extends Phaser.GameObjects.Sprite {
             this.bouncing = false;
             this.box = box;
 
+            this.bumped = false;
+
         
         // final check
             // console.log("from Player.js: constructed!");
@@ -139,19 +141,19 @@ class Guido extends Phaser.GameObjects.Sprite {
 
             this.body.setBounce(0.2); 
 
-            if (keyLEFT.isDown && !this.box.body.touching.left && !this.box.body.blocked.left) {           // moving left
+            if (keyLEFT.isDown && ((!this.box.body.touching.left && !this.box.body.blocked.left) || this.bumped)) {           // moving left
 
                 this.body.setAccelerationX(-this.acceleration);
             
-            } else if (keyRIGHT.isDown && !this.box.body.touching.right && !this.box.body.blocked.right) {   // moving right
+            } else if (keyRIGHT.isDown && ((!this.box.body.touching.right && !this.box.body.blocked.right) || this.bumped)) {   // moving right
 
                 this.body.setAccelerationX(this.acceleration);
             
-            } else if (keyUP.isDown && !this.box.body.touching.up && !this.box.body.blocked.up) {   // moving up
+            } else if (keyUP.isDown && ((!this.box.body.touching.up && !this.box.body.blocked.up) || this.bumped)) {   // moving up
 
                 this.body.setAccelerationY(-this.acceleration);
             
-            } else if (keyDOWN.isDown && !this.box.body.touching.down && !this.box.body.blocked.down) {  
+            } else if (keyDOWN.isDown && ((!this.box.body.touching.down && !this.box.body.blocked.down) || this.bumped)) {  
 
                 this.body.setAccelerationY(this.acceleration);
             

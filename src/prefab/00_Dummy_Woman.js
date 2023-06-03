@@ -6,7 +6,7 @@
 
 class Dummy_Woman extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, texture, guido, state = 'default_still', frame) {
+    constructor(scene, x, y, texture, guido, bigSister = false, state = 'default_still', frame) {
 
         console.log("from 00_Dummy_Woman.js: constructing...");
 
@@ -19,10 +19,15 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
             this.parentScene.physics.add.existing(this);    // then add to PHYSICS scene
 
 
-        // physics variables
+        // variables
 
             this.guido = guido;
             this.activated = false;
+
+            this.bigSister = bigSister;
+
+        
+        //  physics defaults
 
             this.acceleration = 0;
             this.max_x_vel = 0;
@@ -31,12 +36,14 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
 
             // panic attack
 
-            this.states = {default_still: false};
+            this.states = {default_still: false, angry: false};
             this.myPhysics = {
 
                 cutscene: {acceleration: 0, max_x_vel: 0, max_y_vel: 0, ground_drag: 0},
 
                 default_still: {acceleration: 100, max_x_vel: 100, max_y_vel: 100, ground_drag: 100},
+
+                angry: {acceleration: 300, max_x_vel: 500, max_y_vel: 500, ground_drag: 100},
 
             }
 
@@ -47,7 +54,7 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
 
         // set up physics sprite
 
-            this.body.setBounce(0.85);                                       // mutable - just a bit of character - slight reaction to landing
+            this.body.setBounce(1.5);                                       // mutable - just a bit of character - slight reaction to landing
             this.body.setMaxVelocity(this.max_x_vel, this.max_y_vel);       // sets limits to speed
             this.body.setCollideWorldBounds(true);                          // can't exit world
             this.body.setImmovable(true);
@@ -60,13 +67,18 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
     update() {      // update method
 
         // checks
+        if (this.bigSister) {
 
-        // if (this.states.default_still) {
+            if (this.bigSister.activated) {
 
-        //    this.body.moveTo(this.guido, this.x, this.y, this.acceleration);
+                this.setPhysicsState("angry");
 
-        // }//   else if (this.states.free) {
+                console.log("should be livid!!");
 
+            }
+
+        }
+        
     }
 
     
@@ -107,6 +119,7 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
 
     activate() {
 
+        console.log("from 00_Dummy_Woman.js(): from activate(): overlapped!!");
         this.activated = true;
 
     }

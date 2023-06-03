@@ -14,6 +14,8 @@ class Scene2_test_movement extends Phaser.Scene {
         this.load.image('borderVert', './assets/borderVertical.png');
         this.load.image('borderHoriz', './assets/borderHorizontal.png');
 
+        this.load.image('presence', './assets/presence.png');
+
         // testing
 
         this.load.image('someSprite', './assets/indigoRoad.png');
@@ -44,12 +46,15 @@ class Scene2_test_movement extends Phaser.Scene {
             // guido
         this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car', 0, 'suspended').setOrigin(0.5, 0);
 
+        this.presence = this.physics.add.image(this.guido.x, this.guido.y, 'presence');
+        this.presence.alpha = 0;
+
             // box
         this.box = new Box(this, game.config.width/2, game.config.height/2, 'box', this.guido).setOrigin(0.5, 0.5);
         
         this.guido.box = this.box;
 
-        // this.box.alpha = 0;
+        this.box.alpha = 0;
             // OTHER box
         
         // walls
@@ -73,13 +78,28 @@ class Scene2_test_movement extends Phaser.Scene {
             // testing objects
         //this.man = new Dummy_Man(this, game.config.width/2, game.config.height/2 + 150, 'car').setOrigin(0.5, 0.5);
         //this.man2 = new Dummy_Man(this, game.config.width/2, game.config.height/2 - 150, 'car').setOrigin(0.5, 0.5);
-        this.woman = new Dummy_Woman(this, game.config.width/2, game.config.height/2 + 150, this.guido, 'someSprite').setOrigin(0.5, 0.5);
+        this.woman = new Dummy_Woman(this, game.config.width/2, game.config.height - 5, 'someSprite', this.guido, false, "angry").setOrigin(0.5, 0.5);
+        this.woman2 = new Dummy_Woman(this, game.config.width - 5, game.config.height/2, 'someSprite', this.guido, this.woman).setOrigin(0.5, 0.5);
 
         //this.physics.add.collider(this.box, this.man, this.stopGuidoBouncing, null, this);
         this.physics.add.collider(this.box, this.man2, this.stopGuidoBouncing, null, this);
         this.physics.add.collider(this.guido, this.woman, this.setGuidoBouncing, null, this);
+        this.physics.add.collider(this.guido, this.woman2, this.setGuidoBouncing, null, this);
 
-        this.physics.add.overlap(this.woman, this.box, this.woman.activate);
+        
+        this.presence.body.onOverlap = true;
+        this.woman.body.onOverlap = true;
+        
+        this.physics.add.overlap(this.presence, this.woman);
+        this.physics.add.overlap(this.presence, this.woman2);
+
+
+        this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) =>
+        {
+            console.log("overlapped");
+            gameObject2.activated = true;
+
+        })
 
     }
 
@@ -87,16 +107,21 @@ class Scene2_test_movement extends Phaser.Scene {
 
         this.box.update();
         this.guido.update();
+        this.woman2.update();
+        
+        this.presenceUpdate();
 
-        if (this.woman.activated) { this.physics.moveToObject(this.woman, this.guido, this.woman.acceleration) };
+        if (this.woman.activated) { 
+            
+            this.physics.moveToObject(this.woman, this.guido, this.woman.acceleration) 
+        
+        };
 
-        // this.woman.update();
-
-        if (this.box.body.touching.up) { console.log("---> GAHHHHHHHH!!!!!!!!!!!UPPP"); }
-        if (this.box.body.touching.down) { console.log("---> GAHHHHHHHH!!!!!!!!!!!DOWNNN"); }
-
-        // console.log("---->touch", this.box.body.touching);
-        // console.log("---->block", this.box.body.blocked);
+        if (this.woman2.activated) { 
+            
+            this.physics.moveToObject(this.woman2, this.guido, this.woman2.acceleration) 
+        
+        };
 
         this.someWall.update();
         this.someWallLeft.update();
@@ -105,15 +130,16 @@ class Scene2_test_movement extends Phaser.Scene {
 
     }
 
+    presenceUpdate() {
+
+        this.presence.x = this.guido.x;
+        this.presence.y = this.guido.y;
+
+    }
+
     setGuidoBouncing() {
 
-        this.guido.bouncing = true;
-        
-        let next = this.time.delayedCall(3000, () => {
-
-            this.guido.bouncing = false;
-    
-        }, null, this);
+        this.guido.bumped = true;
 
     }
 
@@ -127,6 +153,12 @@ class Scene2_test_movement extends Phaser.Scene {
         if (this.box.body.touching.down) { console.log("---> GAHHHHHHHH!!!!!!!!!!!DOWNNN"); }
 
         this.guido.bouncing = false;
+
+    }
+
+    overlapFlag() {
+
+        console.log("we overlapped!");
 
     }
 
