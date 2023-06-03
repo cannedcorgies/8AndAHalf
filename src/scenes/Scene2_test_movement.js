@@ -16,9 +16,11 @@ class Scene2_test_movement extends Phaser.Scene {
 
         this.load.image('presence', './assets/presence.png');
 
-        // testing
+        // map
+        this.load.tilemapTiledJSON('scene2_trial_JSON', './assets/scene2_trial.json');
 
-        this.load.image('someSprite', './assets/indigoRoad.png');
+        // testing
+        this.load.image('spaceship', './assets/spaceship.png');
 
     }
   
@@ -33,24 +35,40 @@ class Scene2_test_movement extends Phaser.Scene {
         keyUP = 
             this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
 
+        //creating tilemap
+        const map = this.add.tilemap('scene2_trial_JSON');
+
+        console.log("from Scene2_test_movement.js: from constructor(): should've added tilemap");
+
+            // spawn points
+        const guidoSpawn = map.findObject('spawn_player', obj => obj.name === 'guido');
+
+            // men spawns
+        const man1Spawn = map.findObject('spawn_men', obj => obj.name === 'man_01');
+        const man2Spawn = map.findObject('spawn_men', obj => obj.name === 'man_02');
+
+            // women spawns
+        const oldSpawn = map.findObject('spawn_women', obj => obj.name === 'old');
+
         // camera
 
         this.camera1 = this.cameras.main;
         this.camera1.setBackgroundColor('rgba(135, 135, 135, 1)');  // gray
         this.worldCenter = new Center(this, game.config.width/2, game.config.height/2, 'carl').setOrigin(0.5, 0.5);
-        this.camera1.startFollow(this.worldCenter);
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         
         // objects
 
             // guido
-        this.guido = new Guido(this, game.config.width/2, game.config.height/2, 'car', 0, 'suspended').setOrigin(0.5, 0);
+        this.guido = new Guido(this, guidoSpawn.x, guidoSpawn.y, 'car', 0, 'suspended').setOrigin(0.5, 0);
+        this.camera1.startFollow(this.guido);
 
         this.presence = this.physics.add.image(this.guido.x, this.guido.y, 'presence');
         this.presence.alpha = 0;
 
             // box
-        this.box = new Box(this, game.config.width/2, game.config.height/2, 'box', this.guido).setOrigin(0.5, 0.5);
+        this.box = new Box(this, guidoSpawn.x, guidoSpawn.y, 'box', this.guido).setOrigin(0.5, 0.5);
         
         this.guido.box = this.box;
 
@@ -77,21 +95,19 @@ class Scene2_test_movement extends Phaser.Scene {
 
             // testing objects
         //this.man = new Dummy_Man(this, game.config.width/2, game.config.height/2 + 150, 'car').setOrigin(0.5, 0.5);
-        //this.man2 = new Dummy_Man(this, game.config.width/2, game.config.height/2 - 150, 'car').setOrigin(0.5, 0.5);
-        this.woman = new Dummy_Woman(this, game.config.width/2, game.config.height - 5, 'someSprite', this.guido, false, "angry").setOrigin(0.5, 0.5);
-        this.woman2 = new Dummy_Woman(this, game.config.width - 5, game.config.height/2, 'someSprite', this.guido, this.woman).setOrigin(0.5, 0.5);
-
+        // this.man1 = new Dummy_Man(this, man1Spawn.x, man1Spawn.y, 'car').setOrigin(0.5, 0.5);
+        this.man2 = new Dummy_Man(this, man2Spawn.x, man2Spawn.y, 'car').setOrigin(0.5, 0.5);
+        this.woman = new Dummy_Woman(this, oldSpawn.x, oldSpawn.y, 'spaceship', this.guido, false, "angry").setOrigin(0.5, 0.5);
+        
         //this.physics.add.collider(this.box, this.man, this.stopGuidoBouncing, null, this);
-        this.physics.add.collider(this.box, this.man2, this.stopGuidoBouncing, null, this);
-        this.physics.add.collider(this.guido, this.woman, this.setGuidoBouncing, null, this);
-        this.physics.add.collider(this.guido, this.woman2, this.setGuidoBouncing, null, this);
+        // this.physics.add.collider(this.box, this.man1);
+        this.physics.add.collider(this.box, this.man2);
+        this.physics.add.collider(this.guido, this.woman);
 
         
         this.presence.body.onOverlap = true;
-        this.woman.body.onOverlap = true;
         
         this.physics.add.overlap(this.presence, this.woman);
-        this.physics.add.overlap(this.presence, this.woman2);
 
 
         this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) =>
@@ -107,19 +123,13 @@ class Scene2_test_movement extends Phaser.Scene {
 
         this.box.update();
         this.guido.update();
-        this.woman2.update();
+        this.woman.update();
         
         this.presenceUpdate();
 
         if (this.woman.activated) { 
             
             this.physics.moveToObject(this.woman, this.guido, this.woman.acceleration) 
-        
-        };
-
-        if (this.woman2.activated) { 
-            
-            this.physics.moveToObject(this.woman2, this.guido, this.woman2.acceleration) 
         
         };
 
@@ -140,19 +150,6 @@ class Scene2_test_movement extends Phaser.Scene {
     setGuidoBouncing() {
 
         this.guido.bumped = true;
-
-    }
-
-    stopGuidoBouncing() {
-
-        console.log("should be colliding, box!!");
-        console.log("---->", this.box.body.touching);
-        console.log("---->", this.box.body.blocked);
-
-        if (this.box.body.touching.up) { console.log("---> GAHHHHHHHH!!!!!!!!!!!UPPP"); }
-        if (this.box.body.touching.down) { console.log("---> GAHHHHHHHH!!!!!!!!!!!DOWNNN"); }
-
-        this.guido.bouncing = false;
 
     }
 

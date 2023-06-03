@@ -18,6 +18,8 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
             this.parentScene.add.existing(this);            // first add to scene
             this.parentScene.physics.add.existing(this);    // then add to PHYSICS scene
 
+            this.body.onOverlap = true;
+
 
         // variables
 
