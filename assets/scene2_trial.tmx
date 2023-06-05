@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="400" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="6">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="400" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="26">
  <editorsettings>
   <export target="scene2_trial.tmj" format="json"/>
  </editorsettings>
@@ -411,15 +411,75 @@
 </data>
  </layer>
  <objectgroup id="2" name="spawn_player">
-  <object id="1" name="guido" x="320" y="5843.88">
+  <object id="1" name="guido" x="316.303" y="6246.86">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="3" name="spawn_men">
-  <object id="2" name="man_01" x="115.3" y="5454.6">
+  <object id="2" name="man_01" x="392.579" y="6083.1">
    <point/>
   </object>
-  <object id="4" name="man_02" x="517.121" y="5222.36">
+  <object id="4" name="man_02" x="140.022" y="5706.67">
+   <point/>
+  </object>
+  <object id="6" name="man_07" x="273.582" y="5076.05">
+   <point/>
+  </object>
+  <object id="7" name="man_04" x="476.919" y="5530.78">
+   <point/>
+  </object>
+  <object id="8" name="man_05" x="136.791" y="5331.14">
+   <point/>
+  </object>
+  <object id="9" name="man_06" x="384.493" y="5076.05">
+   <point/>
+  </object>
+  <object id="10" name="man_03" x="147.882" y="4846.83">
+   <point/>
+  </object>
+  <object id="11" name="man_08" x="55.4557" y="4817.25">
+   <point/>
+  </object>
+  <object id="12" name="man_10" x="391.887" y="4599.13">
+   <point/>
+  </object>
+  <object id="13" name="man_12" x="536.072" y="4325.55">
+   <point/>
+  </object>
+  <object id="14" name="man_09" x="543.466" y="4661.98">
+   <point/>
+  </object>
+  <object id="15" name="man_13" x="266.187" y="4199.85">
+   <point/>
+  </object>
+  <object id="16" name="man_11" x="114.608" y="4362.52">
+   <point/>
+  </object>
+  <object id="17" name="man_15" x="122.003" y="3966.93">
+   <point/>
+  </object>
+  <object id="18" name="man_14" x="517.587" y="4092.63">
+   <point/>
+  </object>
+  <object id="19" name="man_16" x="414.069" y="3981.72">
+   <point/>
+  </object>
+  <object id="20" name="man_18" x="107.214" y="3700.74">
+   <point/>
+  </object>
+  <object id="21" name="man_17" x="295.764" y="3752.5">
+   <point/>
+  </object>
+  <object id="22" name="man_19" x="517.587" y="3552.86">
+   <point/>
+  </object>
+  <object id="23" name="man_21" x="521.284" y="3331.04">
+   <point/>
+  </object>
+  <object id="24" name="man_20" x="236.611" y="3404.98">
+   <point/>
+  </object>
+  <object id="25" name="man_22" x="129.397" y="3131.4">
    <point/>
   </object>
  </objectgroup>

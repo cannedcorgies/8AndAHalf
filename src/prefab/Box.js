@@ -33,7 +33,7 @@ class Box extends Phaser.GameObjects.Sprite {
 
                 cutscene: {acceleration: 0, max_x_vel: 0, max_y_vel: 0, ground_drag: 0},
 
-                default: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 2500},
+                default: {acceleration: 500, max_x_vel: 500, max_y_vel: 300, ground_drag: 2500},
 
             }
 
@@ -65,19 +65,19 @@ class Box extends Phaser.GameObjects.Sprite {
 
             this.body.setBounce(0);
 
-            if (keyLEFT.isDown) {           // moving left
+            if (keyLEFT.isDown && (!this.body.touching.left && !this.body.blocked.left)) {           // moving left
 
                 this.body.setAccelerationX(-this.acceleration);
             
-            } else if (keyRIGHT.isDown) {   // moving right
+            } else if (keyRIGHT.isDown && (!this.body.touching.right && !this.body.blocked.right)) {   // moving right
 
                 this.body.setAccelerationX(this.acceleration);
             
-            } else if (keyUP.isDown) {   // moving up
+            } else if (keyUP.isDown && (!this.body.touching.up && !this.body.blocked.up)) {   // moving up
 
                 this.body.setAccelerationY(-this.acceleration);
             
-            } else if (keyDOWN.isDown) {  
+            } else if (keyDOWN.isDown && (!this.body.touching.down && !this.body.blocked.down)) {  
 
                 this.body.setAccelerationY(this.acceleration);
             

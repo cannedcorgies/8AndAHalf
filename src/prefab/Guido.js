@@ -44,7 +44,7 @@ class Guido extends Phaser.GameObjects.Sprite {
                 controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
                
                 // scene 2 states
-                suspended: {acceleration: 500, max_x_vel: 500, max_y_vel: 500, ground_drag: 2500}
+                suspended: {acceleration: 510, max_x_vel: 500, max_y_vel: 300, ground_drag: 2500}
 
                 // scene 2 states
 
