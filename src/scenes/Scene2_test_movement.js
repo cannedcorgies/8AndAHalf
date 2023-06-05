@@ -82,6 +82,12 @@ class Scene2_test_movement extends Phaser.Scene {
             // women spawns
         const oldSpawn = map.findObject('spawn_women', obj => obj.name === 'old');
 
+        const woman1Spawn = map.findObject('spawn_women', obj => obj.name === 'woman_01');
+        const woman2Spawn = map.findObject('spawn_women', obj => obj.name === 'woman_02');
+        const woman3Spawn = map.findObject('spawn_women', obj => obj.name === 'woman_03');
+        const woman4Spawn = map.findObject('spawn_women', obj => obj.name === 'woman_04');
+        const woman5Spawn = map.findObject('spawn_women', obj => obj.name === 'woman_05');
+
         // camera
 
         this.camera1 = this.cameras.main;
@@ -154,46 +160,73 @@ class Scene2_test_movement extends Phaser.Scene {
         this.man21 = new Dummy_Man(this, man21Spawn.x, man21Spawn.y, 'car').setOrigin(0.5, 0.5);
         this.man22 = new Dummy_Man(this, man22Spawn.x, man22Spawn.y, 'car').setOrigin(0.5, 0.5);
 
-        this.physics.add.collider(this.box, this.man1);
-        this.physics.add.collider(this.box, this.man2);
-        this.physics.add.collider(this.box, this.man3);
-        this.physics.add.collider(this.box, this.man4);
-        this.physics.add.collider(this.box, this.man5);
-        this.physics.add.collider(this.box, this.man6);
-        this.physics.add.collider(this.box, this.man7);
-        this.physics.add.collider(this.box, this.man8);
-        this.physics.add.collider(this.box, this.man9);
-        this.physics.add.collider(this.box, this.man10);
-        this.physics.add.collider(this.box, this.man11);
-        this.physics.add.collider(this.box, this.man12);
-        this.physics.add.collider(this.box, this.man13);
-        this.physics.add.collider(this.box, this.man14);
-        this.physics.add.collider(this.box, this.man15);
-        this.physics.add.collider(this.box, this.man16);
-        this.physics.add.collider(this.box, this.man17);
-        this.physics.add.collider(this.box, this.man18);
-        this.physics.add.collider(this.box, this.man19);
-        this.physics.add.collider(this.box, this.man20);
-        this.physics.add.collider(this.box, this.man21);
-        this.physics.add.collider(this.box, this.man22);
+        this.men = [ this.man1,
+                    this.man2,
+                    this.man3,
+                    this.man4,
+                    this.man5,
+                    this.man6,
+                    this.man7,
+                    this.man8,
+                    this.man9,
+                    this.man10,
+                    this.man11,
+                    this.man12,
+                    this.man13,
+                    this.man14,
+                    this.man15,
+                    this.man16,
+                    this.man17,
+                    this.man18,
+                    this.man19,
+                    this.man20,
+                    this.man21,
+                    this.man22 
+                ]
 
+        for (let i = 0; i < this.men.length; i++) {     // loop through properties by name
+
+            this.physics.add.collider(this.guido, this.men[i]);
+            this.physics.add.collider(this.box, this.men[i]);
+        
+        }
 
             // women
 
         this.old = new Dummy_Woman(this, oldSpawn.x, oldSpawn.y, 'spaceship', this.guido, false, "angry").setOrigin(0.5, 0.5);
+        this.woman_01 = new Dummy_Woman(this, woman1Spawn.x, woman1Spawn.y, 'spaceship', this.guido, false).setOrigin(0.5, 0.5);
+        this.woman_02 = new Dummy_Woman(this, woman2Spawn.x, woman2Spawn.y, 'spaceship', this.guido, false).setOrigin(0.5, 0.5);
+        this.woman_03 = new Dummy_Woman(this, woman3Spawn.x, woman3Spawn.y, 'spaceship', this.guido, false).setOrigin(0.5, 0.5);
+        this.woman_04 = new Dummy_Woman(this, woman4Spawn.x, woman4Spawn.y, 'spaceship', this.guido, false).setOrigin(0.5, 0.5);
+        this.woman_05 = new Dummy_Woman(this, woman5Spawn.x, woman5Spawn.y, 'spaceship', this.guido, false).setOrigin(0.5, 0.5);
+
+        this.women = [ this.old,
+                        this.woman_01,
+                        this.woman_02,
+                        this.woman_03,
+                        this.woman_04,
+                        this.woman_05 
+                    ]
         
-        this.physics.add.collider(this.guido, this.old);
+        for (let i = 0; i < this.women.length; i++) {     // loop through properties by name
+
+            this.physics.add.collider(this.guido, this.women[i]);
+
+        }
 
         
         this.presence.body.onOverlap = true;
-        this.old.body.onOverlap = true;
         
-        this.physics.add.overlap(this.presence, this.old);
+        for (let i = 0; i < this.women.length; i++) {     // loop through properties by name
+
+            this.physics.add.overlap(this.presence, this.women[i]);
+
+        }
 
 
         this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) =>
         {
-            console.log("overlapped");
+            
             gameObject2.activated = true;
 
         })
@@ -204,19 +237,21 @@ class Scene2_test_movement extends Phaser.Scene {
 
         this.camera1.shake(100, 0.0008)
 
-        this.guido.update();
         this.box.update();
+        this.guido.update();
         this.presenceUpdate();
 
+        for (let i = 0; i < this.women.length; i++) {     // loop through properties by name
 
-        this.old.update();
+            this.women[i].update();
 
-        if (this.old.activated) { 
+            if (this.women[i].activated) { 
             
-            this.physics.moveToObject(this.old, this.guido, this.old.acceleration) 
-        
-        };
+                this.physics.moveToObject(this.women[i], this.guido, this.women[i].acceleration) 
+            
+            };
 
+        }
 
         this.someWall.update();
         this.someWallLeft.update();

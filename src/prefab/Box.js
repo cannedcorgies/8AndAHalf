@@ -33,7 +33,7 @@ class Box extends Phaser.GameObjects.Sprite {
 
                 cutscene: {acceleration: 0, max_x_vel: 0, max_y_vel: 0, ground_drag: 0},
 
-                default: {acceleration: 500, max_x_vel: 500, max_y_vel: 300, ground_drag: 2500},
+                default: {acceleration: 500, max_x_vel: 500, max_y_vel: 250, ground_drag: 2500},
 
             }
 

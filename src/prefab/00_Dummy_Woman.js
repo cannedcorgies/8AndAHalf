@@ -43,9 +43,9 @@ class Dummy_Woman extends Phaser.GameObjects.Sprite {
 
                 cutscene: {acceleration: 0, max_x_vel: 0, max_y_vel: 0, ground_drag: 0},
 
-                default_still: {acceleration: 100, max_x_vel: 100, max_y_vel: 100, ground_drag: 100},
+                default_still: {acceleration: 75, max_x_vel: 100, max_y_vel: 75, ground_drag: 100},
 
-                angry: {acceleration: 300, max_x_vel: 500, max_y_vel: 500, ground_drag: 100},
+                angry: {acceleration: 300, max_x_vel: 500, max_y_vel: 300, ground_drag: 100},
 
             }
 
