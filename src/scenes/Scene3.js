@@ -110,26 +110,33 @@ class Scene3 extends Phaser.Scene {
       this.sheetMusic = new SheetMusic(this, 0, 0);
       this.piano.sheetMusic = this.sheetMusic;
 
-      // first line
+      // first part
+
+      for (let i = 0; i < 3; i++) {
+        // first line
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("f5sharp");
-        this.sheetMusic.push("g5sharp");  //
+        this.sheetMusic.push("g5sharp");  // measure's over
+
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");  //
+
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");       //
+
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5sharp");  //
+
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");
@@ -137,41 +144,106 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("f5sharp");  //
 
-      // second line
+        // second line
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");
         this.sheetMusic.push("f5");       //
+
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5");       //
+
         this.sheetMusic.push("e5");
         this.sheetMusic.push("d5sharp");
-        this.sheetMusic.push("e5");
-        this.sheetMusic.push("d5sharp");
-        this.sheetMusic.push("e5");
-        this.sheetMusic.push("d5sharp");  //
         this.sheetMusic.push("e5");
         this.sheetMusic.push("d5sharp");
         this.sheetMusic.push("e5");
         this.sheetMusic.push("d5sharp");  //
 
-      // third line
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("d5sharp");
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("d5sharp");  //
+
+        // third line
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");  //
+
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");  //
+
         this.sheetMusic.push("c5");
         this.sheetMusic.push("c5sharp");  //
+      
+      }
+      // second part
+        // fourth line
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("f5");       //
+
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("f5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("f5");
+        this.sheetMusic.push("f5sharp");  //
+
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("f5");       //
+
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("f5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("f5");
+        this.sheetMusic.push("f5sharp");  //
+
+        this.sheetMusic.push("a5");
+        this.sheetMusic.push("a5sharp");
+        this.sheetMusic.push("b5");
+        this.sheetMusic.push("a5sharp");
+        this.sheetMusic.push("b5");
+        this.sheetMusic.push("a5sharp");  //
+
+        //fifth line
+        this.sheetMusic.push("b5");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("a5");       //
+
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5");
+        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5");
+        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("e5");       //
+
+        this.sheetMusic.push("c6sharp");
+        this.sheetMusic.push("f5");       //
+
+        this.sheetMusic.push("d6");
+
 
       this.sheetMusic.print();
 
