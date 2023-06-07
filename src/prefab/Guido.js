@@ -30,7 +30,7 @@ class Guido extends Phaser.GameObjects.Sprite {
             this.max_y_vel = 0;
             this.ground_drag = 0;
 
-            // panic attack
+            // multiple states with different movement and movement attributes
 
             this.states = {panicAttack: false, free: false, controlOff: false, suspended: false};
             this.myPhysics = {
@@ -45,8 +45,6 @@ class Guido extends Phaser.GameObjects.Sprite {
                
                 // scene 2 states
                 suspended: {acceleration: 510, max_x_vel: 500, max_y_vel: 250, ground_drag: 2700}
-
-                // scene 2 states
 
             }
 
@@ -75,6 +73,8 @@ class Guido extends Phaser.GameObjects.Sprite {
     }
 
     update() {      // update method
+
+        // updates according to the set state
 
         // checks
 
@@ -186,21 +186,22 @@ class Guido extends Phaser.GameObjects.Sprite {
 
     setPhysicsState(state) {
 
-        if (state in this.states === false) {
+        if (state in this.states === false) {       // state not found
 
             console.log("==============from Guido.js: from setPhysicsState: invalid state!==============");
             return
 
         }
 
-        this.resetStates();
-        this.states[state] = true;
+        this.resetStates();                 // one state at a time
+        this.states[state] = true;          // activate fetched state
 
-        let physicsState = this.myPhysics[state];
+        let physicsState = this.myPhysics[state];   // fetch properties of state
 
         console.log("from Guido.js: from setPhysicsState: current physics:", state);
         console.log("   -->", physicsState);
 
+        // set properties from state
         this.acceleration = physicsState.acceleration;
         this.max_x_vel = physicsState.max_x_vel;
         this.max_y_vel = physicsState.max_y_vel;

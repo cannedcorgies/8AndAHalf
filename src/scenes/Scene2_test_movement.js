@@ -47,9 +47,6 @@ class Scene2_test_movement extends Phaser.Scene {
         console.log(map.widthInPixels);
         console.log(config.height);
 
-        // const terrainTileSet = map.addTilesetImage('Terrain (16x16)', 'terrainImage');
-        // let terrainLayer = map.createLayer('background', terrainTileSet, 0, 0);
-
         console.log("from Scene2_test_movement.js: from constructor(): should've added tilemap");
 
             // spawn points
@@ -184,7 +181,7 @@ class Scene2_test_movement extends Phaser.Scene {
                     this.man22 
                 ]
 
-        for (let i = 0; i < this.men.length; i++) {     // loop through properties by name
+        for (let i = 0; i < this.men.length; i++) {     // loop through to enable collision with guido and box
 
             this.physics.add.collider(this.guido, this.men[i]);
             this.physics.add.collider(this.box, this.men[i]);
@@ -208,7 +205,7 @@ class Scene2_test_movement extends Phaser.Scene {
                         this.woman_05 
                     ]
         
-        for (let i = 0; i < this.women.length; i++) {     // loop through properties by name
+        for (let i = 0; i < this.women.length; i++) {     // loop through to enable collision with guido
 
             this.physics.add.collider(this.guido, this.women[i]);
 
@@ -217,19 +214,19 @@ class Scene2_test_movement extends Phaser.Scene {
         
         this.presence.body.onOverlap = true;
         
-        for (let i = 0; i < this.women.length; i++) {     // loop through properties by name
+        for (let i = 0; i < this.women.length; i++) {     // loop through to enable overlap with presence
 
             this.physics.add.overlap(this.presence, this.women[i]);
 
         }
 
 
-        this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) =>
+        this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) =>    // set in motion
         {
             
             gameObject2.activated = true;
 
-        })
+        });
 
     }
 
@@ -241,7 +238,7 @@ class Scene2_test_movement extends Phaser.Scene {
         this.guido.update();
         this.presenceUpdate();
 
-        for (let i = 0; i < this.women.length; i++) {     // loop through properties by name
+        for (let i = 0; i < this.women.length; i++) {     // loop through women and move accordingly
 
             this.women[i].update();
 

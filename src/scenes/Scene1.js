@@ -115,8 +115,8 @@ class Scene1 extends Phaser.Scene {
       this.free;
 
       uiConfig.fixedWidth = 0;
-      this.clock = this.time.delayedCall(this.chillinTime, () => {
-
+      this.clock = this.time.delayedCall(this.chillinTime, () => {    // start the states of the scene
+                                                                        // goes from "tutorial" to timed scene
         this.chillin = false;
         this.panicAttack = true;
         this.startPanicAttack();
@@ -131,12 +131,13 @@ class Scene1 extends Phaser.Scene {
 
 
       // cutaways
+        // at certain time intervals, the player is shown cuts from the movie scene
       this.cutaway = 0;
       this.cutawayDistances = [9000, 18000, 10000];
       this.cutawayTime = [2000, 2000, 2000]
       this.zoomie = 0.3;
 
-      this.zoom();
+      this.zoom();  // set initial zoom
 
     }
 
@@ -177,7 +178,7 @@ class Scene1 extends Phaser.Scene {
 
       console.log("from Scene1.js: from startPanicAttack(): panic attack started");
 
-      this.cutawayNext();
+      this.cutawayNext();   // starts cutaways
 
       this.clock = this.time.delayedCall(this.panicAttackTime, () => {
 
@@ -229,7 +230,7 @@ class Scene1 extends Phaser.Scene {
             this.cutawayImages[this.cutaway - 2].alpha = 0;
             this.clockUI.alpha = 1;
             
-            this.cueCam();
+            this.cueCam();    // at end of each cutaway timer, begins the next
     
           }, null, this);
         }
