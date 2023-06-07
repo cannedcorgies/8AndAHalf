@@ -27,6 +27,11 @@ class Scene3 extends Phaser.Scene {
       this.load.audio('D6', './sounds/D6.wav');
       this.load.audio('D6#', './sounds/D6Sharp.wav');
 
+      this.load.image('key full', './assets/key_full.png');
+      this.load.image('key sharp-right', './assets/key_sharpRight.png');
+      this.load.image('key sharp-left', './assets/key_sharpLeft.png');
+      this.load.image('key sharp-both-sides', './assets/key_bothSides.png');
+
     }
   
     create() { 
@@ -70,11 +75,36 @@ class Scene3 extends Phaser.Scene {
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);   // high-C sharp
 
       
-      console.log(Phaser.Input.Keyboard.KeyCodes);
+      // piano keys
 
+      this.marginSides = 120;
+      this.marginBottom = game.config.height - 90;
+
+      this.keyB4 = this.add.image(this.marginSides, this.marginBottom, "key full");
+      this.keyC5 = this.add.image(this.keyB4.x + this.keyB4.width, this.marginBottom, "key sharp-right");
+      this.keyD5 = this.add.image(this.keyC5.x + this.keyC5.width, this.marginBottom, "key sharp-both-sides");
+      this.keyE5 = this.add.image(this.keyD5.x + this.keyD5.width, this.marginBottom, "key sharp-left");
+      this.keyF5 = this.add.image(this.keyE5.x + this.keyE5.width, this.marginBottom, "key sharp-right");
+      this.keyG5 = this.add.image(this.keyF5.x + this.keyF5.width, this.marginBottom, "key sharp-both-sides");
+      this.keyA5 = this.add.image(this.keyG5.x + this.keyG5.width, this.marginBottom, "key sharp-both-sides");
+      this.keyB5 = this.add.image(this.keyA5.x + this.keyA5.width, this.marginBottom, "key sharp-left");
+      this.keyC6 = this.add.image(this.keyB5.x + this.keyB5.width, this.marginBottom, "key sharp-right");
+      this.keyD6 = this.add.image(this.keyC6.x + this.keyC6.width, this.marginBottom, "key sharp-left");
 
       // piano
-      this.piano = new Piano(this, game.config.width/2, game.config.height/2);
+      this.piano = new Piano(this, game.config.width/2, game.config.height/2,
+          this.keyB4,
+          this.keyC5,
+          this.keyD5,
+          this.keyE5,
+          this.keyF5,
+          this.keyG5,
+          this.keyA5,
+          this.keyB5,
+          this.keyC6,
+          this.keyD6,
+          this.marginBottom
+      );
 
     }
 
