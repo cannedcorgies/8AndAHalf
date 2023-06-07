@@ -64,6 +64,8 @@ class Piano extends Phaser.GameObjects.Sprite {
         this.C6Sharp = scene.sound.add('C6#');
         this.D6 = scene.sound.add('D6');
         this.D6Sharp = scene.sound.add('D6#');
+
+        this.sheetMusic;
         
         // final check
         console.log("from Piano.js: constructed!");
@@ -78,6 +80,10 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("A");
             this.B4.play();
+
+            this.sheetMusic.frontNoteCheck("b4");       // send "tick" of last note played
+                                                            // if it's the right note,
+                                                            // next prompt will display
             
         }
 
@@ -93,6 +99,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("S");
             this.C5.play();
+
+            this.sheetMusic.frontNoteCheck("c5");
             
         }
 
@@ -107,6 +115,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("D");
             this.D5.play();
+
+            this.sheetMusic.frontNoteCheck("d5");
             
         }
 
@@ -121,6 +131,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("F");
             this.E5.play()
+
+            this.sheetMusic.frontNoteCheck("e5");
             
         }
 
@@ -135,6 +147,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("G");
             this.F5.play();
+
+            this.sheetMusic.frontNoteCheck("f5");
             
         }
 
@@ -149,6 +163,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("H");
             this.G5.play();
+
+            this.sheetMusic.frontNoteCheck("g5");
             
         }
 
@@ -163,6 +179,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("J");
             this.A5.play();
+
+            this.sheetMusic.frontNoteCheck("a5");
             
         }
 
@@ -177,6 +195,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("K");
             this.B5.play();
+
+            this.sheetMusic.frontNoteCheck("b5");
             
         }
 
@@ -191,6 +211,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("L");
             this.C6.play();
+
+            this.sheetMusic.frontNoteCheck("c6");
             
         }
 
@@ -205,6 +227,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("SEMICOLON;");
             this.D6.play();
+
+            this.sheetMusic.frontNoteCheck("d6");
             
         }
 
@@ -220,6 +244,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("E");
             this.C5Sharp.play();
+
+            this.sheetMusic.frontNoteCheck("c5sharp");
             
         }
 
@@ -228,12 +254,16 @@ class Piano extends Phaser.GameObjects.Sprite {
             console.log("R");
             this.D5Sharp.play();
             
+            this.sheetMusic.frontNoteCheck("d5sharp");
+
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyY)) {     // F5#
 
             console.log("Y");
             this.F5Sharp.play();
+
+            this.sheetMusic.frontNoteCheck("f5sharp");
             
         }
 
@@ -241,6 +271,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("U");
             this.G5Sharp.play();
+
+            this.sheetMusic.frontNoteCheck("g5sharp");
             
         }
 
@@ -248,6 +280,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("I");
             this.A5Sharp.play();
+
+            this.sheetMusic.frontNoteCheck("a5sharp");
             
         }
 
@@ -255,6 +289,8 @@ class Piano extends Phaser.GameObjects.Sprite {
 
             console.log("P");
             this.C6Sharp.play();
+
+            this.sheetMusic.frontNoteCheck("c6sharp");
             
         }
 
