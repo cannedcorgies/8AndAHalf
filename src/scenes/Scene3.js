@@ -32,11 +32,25 @@ class Scene3 extends Phaser.Scene {
       this.load.image('key sharp-left', './assets/key_sharpLeft.png');
       this.load.image('key sharp-both-sides', './assets/key_bothSides.png');
 
+      this.load.spritesheet('spritesheet_slyMan', './assets/Cutaways/Reporters/slyMan_scaledDown.png', {
+        frameWidth: 160, 
+        frameHeight: 76
+      });
+
     }
   
     create() { 
 
       console.log("creating Scene 3...")
+
+      this.midWay = game.config.width/2;
+      this.cutawaysSpawnY = game.config.height/2 - 100;
+
+      // cutaways
+      this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, 0);
+
+      // just the cam
+      this.camera1 = this.cameras.main;
 
       // naturals
       keyA =
@@ -114,7 +128,7 @@ class Scene3 extends Phaser.Scene {
 
       for (let i = 0; i < 3; i++) {
         // first line
-        this.sheetMusic.push("c5sharp");
+        this.sheetMusic.push("c5sharp", this.slyMan);
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");  // measure's over
 
@@ -186,7 +200,7 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("c5sharp");  //
       
       }
-      // second part
+      // second art
         // fourth line
         this.sheetMusic.push("e5");
         this.sheetMusic.push("f5sharp");
@@ -239,13 +253,21 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("e5");       //
 
+        this.sheetMusic.push("c6");   // misc
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("c6");
+        this.sheetMusic.push("e5");
+        this.sheetMusic.push("c6sharp");
+        this.sheetMusic.push("e5");
         this.sheetMusic.push("c6sharp");
         this.sheetMusic.push("f5");       //
 
         this.sheetMusic.push("d6");
+        this.sheetMusic.push("f5");
+        this.sheetMusic.push("d6");
 
 
-      this.sheetMusic.print();
+      //this.sheetMusic.print();
 
       this.noteToPlay = this.add.text(game.config.width/2, game.config.height/2, this.sheetMusic.getFront());
 
@@ -254,6 +276,7 @@ class Scene3 extends Phaser.Scene {
 
     update() {
 
+      this.camera1.shake(100, 0.0009)
       this.piano.update();
       this.noteToPlay.text = this.sheetMusic.translateFront();
 

@@ -98,7 +98,7 @@ class Piano extends Phaser.GameObjects.Sprite {
         if (Phaser.Input.Keyboard.JustDown(keyS)) {     // C5
 
             console.log("S");
-            this.C5.play();
+            
 
             this.sheetMusic.frontNoteCheck("c5");
             
@@ -106,6 +106,7 @@ class Piano extends Phaser.GameObjects.Sprite {
 
         if (keyS.isDown) {
             this.c5.y = this.pushDown;
+            this.C5.play();
         } else {
             this.c5.y = this.marginBottom;
         }

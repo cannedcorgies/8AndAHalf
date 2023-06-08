@@ -76,8 +76,8 @@ class SheetMusic extends Phaser.GameObjects.Sprite {
 
     push(note, image = false) {
 
-        console.log("from SheetMusic.js: pushing new note");
-        console.log("  -->", note);
+        //console.log("from SheetMusic.js: pushing new note");
+        //console.log("  -->", note);
 
         if (!(note in this.noteKeyCode)) {
             throw new Error('INSERTED INVALID NOTE');
@@ -123,6 +123,9 @@ class SheetMusic extends Phaser.GameObjects.Sprite {
 
         if (this.checkKey(incomingNote)) {
 
+            if (this.queue[0]['cutaway']) {
+                this.queue[0]['cutaway'].play();
+            }
             this.pop();
             console.log("from SheetMusic.js: from checkKey: popped!");
 

@@ -48,7 +48,7 @@ class CameraBorder extends Phaser.Physics.Arcade.Sprite {
 
         // final check
         
-            // this.alpha = 0;
+            this.alpha = 0;
             // console.log("from Player.js: constructed!");
 
     }
