@@ -53,10 +53,28 @@ class Scene3 extends Phaser.Scene {
         frameWidth: 150, 
         frameHeight: 76
       });
+
+      this.load.image('at press', './assets/Cutaways/Reporters/01_atPress.png');
+      this.load.image('cameras', './assets/Cutaways/Reporters/02_cameras.png');
+      this.load.image('panic', './assets/Cutaways/Reporters/03_panic.png');
+      this.load.image('interrogation', './assets/Cutaways/Reporters/04_interrogation.png');
+      this.load.image('sneak gun', './assets/Cutaways/Reporters/05_sneakGun.png');
+      this.load.image('surprised guido', './assets/Cutaways/Reporters/06_surprised.png');
+
       this.load.spritesheet('spritesheet_slyMan', './assets/Cutaways/Reporters/slyMan_scaledDown.png', {
         frameWidth: 160, 
         frameHeight: 76
       });
+
+      this.load.image('sneaking under table', './assets/Cutaways/Reporters/07_sneakingUnder.png');
+      this.load.image('under table', './assets/Cutaways/Reporters/08_underTable.png');
+
+      this.load.image('gun 01', './assets/Cutaways/Reporters/gun_01.png');
+      this.load.image('gun 02', './assets/Cutaways/Reporters/gun_02.png');
+      this.load.image('gun 03', './assets/Cutaways/Reporters/gun_03.png');
+      this.load.image('gun 04', './assets/Cutaways/Reporters/gun_04.png');
+      this.load.image('gun 05', './assets/Cutaways/Reporters/gun_05.png');
+      this.load.image('gun 06', './assets/Cutaways/Reporters/gun_06.png');
 
       // idle
       this.load.spritesheet('spritesheet_guidoIdle', './assets/GuidoIdle/guido_idle.png', {
@@ -97,7 +115,25 @@ class Scene3 extends Phaser.Scene {
 
         // last stretch
       this.draggingGuido = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_draggingGuido', 11, "dragging guido", 0);
+
+      this.atPress = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'at press', 0, 0, 0, 4);
+      this.camerasShot = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'cameras', 0, 0, 0, 2);
+      this.panic = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'panic', 0, 0, 0, 2);
+      this.interrogation = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'interrogation', 0, 0, 0, 0.5);
+      this.sneakGun = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'sneak gun', 0, 0, 0, 5);
+      this.surprised = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'surprised', 0, 0, 0, 1);
+
       this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, "sly boi", 0);
+
+      this.sneakingUnder = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'sneaking under table', 0, 0, 0, 1);
+      this.crawling = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'under table', 0, 0, 0, 1);
+
+      this.gun01 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 01', 0, 0, 0, 1);
+      this.gun02 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 02', 0, 0, 0, 1);
+      this.gun03 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 03', 0, 0, 0, 1);
+      this.gun04 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 04', 0, 0, 0, 1);
+      this.gun05 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 05', 0, 0, 0, 1);
+      this.gun06 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 06', 0, 0, 0, 1);
 
       // just the cam
       this.camera1 = this.cameras.main;
@@ -295,56 +331,56 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("f5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5");
-        this.sheetMusic.push("f5sharp");  //
+        this.sheetMusic.push("f5sharp", this.atPress);  //
 
-        this.sheetMusic.push("e5");
+        this.sheetMusic.push("e5", this.camerasShot);
         this.sheetMusic.push("f5sharp");
-        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5sharp", this.panic);
         this.sheetMusic.push("g5");
-        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5sharp", this.interrogation);
         this.sheetMusic.push("g5");
-        this.sheetMusic.push("f5sharp");
+        this.sheetMusic.push("f5sharp", this.interrogation);
         this.sheetMusic.push("f5");       //
 
-        this.sheetMusic.push("e5");
+        this.sheetMusic.push("e5", this.interrogation);
         this.sheetMusic.push("f5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5");
-        this.sheetMusic.push("f5sharp");  //
+        this.sheetMusic.push("f5sharp", this.sneakGun);  //
 
         this.sheetMusic.push("a5");
         this.sheetMusic.push("a5sharp");
-        this.sheetMusic.push("b5");
-        this.sheetMusic.push("a5sharp");
+        this.sheetMusic.push("b5", this.surprised);
+        this.sheetMusic.push("a5sharp", this.slyMan);
         this.sheetMusic.push("b5");
         this.sheetMusic.push("a5sharp");  //
 
         //fifth line
         this.sheetMusic.push("b5");
-        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5sharp", this.sneakingUnder);
         this.sheetMusic.push("a5");       //
 
         this.sheetMusic.push("e5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("g5");
-        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5sharp", this.crawling);
         this.sheetMusic.push("g5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("e5");       //
 
-        this.sheetMusic.push("c6");   // misc
+        this.sheetMusic.push("c6", this.gun01);   // misc
         this.sheetMusic.push("e5");
-        this.sheetMusic.push("c6");
+        this.sheetMusic.push("c6", this.gun02);
         this.sheetMusic.push("e5");
-        this.sheetMusic.push("c6sharp");
+        this.sheetMusic.push("c6sharp", this.gun03);
         this.sheetMusic.push("e5");
-        this.sheetMusic.push("c6sharp");
+        this.sheetMusic.push("c6sharp", this.gun04);
         this.sheetMusic.push("f5");       //
 
-        this.sheetMusic.push("d6");
+        this.sheetMusic.push("d6", this.gun05);
         this.sheetMusic.push("f5");
-        this.sheetMusic.push("d6");
+        this.sheetMusic.push("d6", this.gun06);
 
 
       //this.sheetMusic.print();
@@ -357,6 +393,7 @@ class Scene3 extends Phaser.Scene {
     update() {
 
       this.camera1.shake(100, 0.0009)
+
       this.piano.update();
       this.noteToPlay.text = this.sheetMusic.translateFront();
 
