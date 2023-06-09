@@ -78,6 +78,7 @@ class Scene3 extends Phaser.Scene {
       this.load.image('gun 06', './assets/Cutaways/Reporters/gun_06.png');
 
       this.load.image('black screen', './assets/blackScreen.png');
+      this.load.image('eye cover', './assets/eyeCover.png');
 
       // idle
       this.load.spritesheet('spritesheet_guidoIdle', './assets/GuidoIdle/guido_idle.png', {
@@ -98,6 +99,10 @@ class Scene3 extends Phaser.Scene {
       this.guido = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_guidoIdle', 15, "guido idle", 0, 0, -1);
       this.guido.alpha = 1;
       this.guido.play();
+
+      this.eyeCover = this.add.image(this.midWay, this.cutawaysSpawnY - 13, 'eye cover');
+      this.eyeCover.scale = 1.5;
+      this.eyeCover.alpha = 0;
 
       // cutaways
         // first round
@@ -395,12 +400,16 @@ class Scene3 extends Phaser.Scene {
         this.blackScreen.alpha = 0;
       this.gunSFX = this.sound.add('gunshot');
 
-
     }
 
     update() {
 
       this.camera1.shake(100, 0.0009)
+      console.log(this.sheetMusic.size());
+
+      if (this.sheetMusic.size() == 25) {
+        this.eyeCover.alpha = 1;
+      }
 
       if (this.sheetMusic.size()) {
 
