@@ -229,7 +229,9 @@ class Piano extends Phaser.GameObjects.Sprite {
             console.log("SEMICOLON;");
             this.D6.play();
 
-            this.sheetMusic.frontNoteCheck("d6");
+            if (this.sheetMusic.size()) {
+                this.sheetMusic.frontNoteCheck("d6");
+            }
             
         }
 

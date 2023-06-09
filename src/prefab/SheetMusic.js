@@ -96,16 +96,18 @@ class SheetMusic extends Phaser.GameObjects.Sprite {
 
     getFront() {
 
-        let frontKey = this.queue[0]['key'];
-        return frontKey;
+        if (this.size()){
+            let frontKey = this.queue[0]['key'];
+            return frontKey;
+        } else { return null }
 
     }
 
 
     checkKey(incomingNote) {
 
-        let frontKey = this.getFront();
         console.log("from SheetMusic.js: from checkKey(): trying", incomingNote);
+        let frontKey = this.getFront();
         console.log("  -->", frontKey);
 
         if (incomingNote == frontKey) {
@@ -120,6 +122,8 @@ class SheetMusic extends Phaser.GameObjects.Sprite {
 
 
     frontNoteCheck(incomingNote) {
+
+        console.log("from SheetMusic.js: checking front note...");
 
         if (this.checkKey(incomingNote)) {
 
@@ -148,6 +152,12 @@ class SheetMusic extends Phaser.GameObjects.Sprite {
         let translation = this.translate(frontKey);
 
         return translation;
+
+    }
+
+    size() {
+
+        return this.queue.length;
 
     }
 

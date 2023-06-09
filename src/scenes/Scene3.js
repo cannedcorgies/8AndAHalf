@@ -26,6 +26,7 @@ class Scene3 extends Phaser.Scene {
       this.load.audio('C6#', './sounds/C6Sharp.wav');
       this.load.audio('D6', './sounds/D6.wav');
       this.load.audio('D6#', './sounds/D6Sharp.wav');
+      this.load.audio('gunshot', './sounds/Gunshot Sound Effect (Loud and Short).wav')
 
       this.load.image('key full', './assets/key_full.png');
       this.load.image('key sharp-right', './assets/key_sharpRight.png');
@@ -76,6 +77,8 @@ class Scene3 extends Phaser.Scene {
       this.load.image('gun 05', './assets/Cutaways/Reporters/gun_05.png');
       this.load.image('gun 06', './assets/Cutaways/Reporters/gun_06.png');
 
+      this.load.image('black screen', './assets/blackScreen.png');
+
       // idle
       this.load.spritesheet('spritesheet_guidoIdle', './assets/GuidoIdle/guido_idle.png', {
         frameWidth: 150, 
@@ -121,7 +124,7 @@ class Scene3 extends Phaser.Scene {
       this.panic = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'panic', 0, 0, 0, 2);
       this.interrogation = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'interrogation', 0, 0, 0, 0.5);
       this.sneakGun = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'sneak gun', 0, 0, 0, 5);
-      this.surprised = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'surprised', 0, 0, 0, 1);
+      this.surprised = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'surprised guido', 0, 0, 0, 3);
 
       this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, "sly boi", 0);
 
@@ -387,6 +390,11 @@ class Scene3 extends Phaser.Scene {
 
       this.noteToPlay = this.add.text(game.config.width/2, game.config.height/2, this.sheetMusic.getFront());
 
+      this.theEnd = false;
+      this.blackScreen = this.add.image(game.config.width/2, game.config.height/2, 'black screen');
+        this.blackScreen.alpha = 0;
+      this.gunSFX = this.sound.add('gunshot');
+
 
     }
 
@@ -394,8 +402,18 @@ class Scene3 extends Phaser.Scene {
 
       this.camera1.shake(100, 0.0009)
 
-      this.piano.update();
-      this.noteToPlay.text = this.sheetMusic.translateFront();
+      if (this.sheetMusic.size()) {
+
+        this.piano.update();
+        this.noteToPlay.text = this.sheetMusic.translateFront();
+
+      } else if (!this.theEnd) {
+
+        this.theEnd = true;
+        this.blackScreen.alpha = 1;
+        this.gunSFX.play();
+
+      }
 
     }
 
