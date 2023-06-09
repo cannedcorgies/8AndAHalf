@@ -76,6 +76,7 @@ class Scene3 extends Phaser.Scene {
       this.load.image('gun 04', './assets/Cutaways/Reporters/gun_04.png');
       this.load.image('gun 05', './assets/Cutaways/Reporters/gun_05.png');
       this.load.image('gun 06', './assets/Cutaways/Reporters/gun_06.png');
+      this.load.image('mom calling out', './assets/Cutaways/Reporters/momCallingOut.png');
 
       this.load.image('black screen', './assets/blackScreen.png');
       this.load.image('eye cover', './assets/eyeCover.png');
@@ -142,6 +143,7 @@ class Scene3 extends Phaser.Scene {
       this.gun04 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 04', 0, 0, 0, 1);
       this.gun05 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 05', 0, 0, 0, 1);
       this.gun06 = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'gun 06', 0, 0, 0, 1);
+      this.momCallingOut = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'mom calling out', 0, 0, 0, 1);
 
       // just the cam
       this.camera1 = this.cameras.main;
@@ -388,7 +390,7 @@ class Scene3 extends Phaser.Scene {
 
         this.sheetMusic.push("d6", this.gun05);
         this.sheetMusic.push("f5");
-        this.sheetMusic.push("d6", this.gun06);
+        this.sheetMusic.push("d6", this.momCallingOut);
 
 
       //this.sheetMusic.print();
@@ -405,8 +407,7 @@ class Scene3 extends Phaser.Scene {
     update() {
 
       this.camera1.shake(100, 0.0009)
-      console.log(this.sheetMusic.size());
-
+      
       if (this.sheetMusic.size() == 25) {
         this.eyeCover.alpha = 1;
       }
