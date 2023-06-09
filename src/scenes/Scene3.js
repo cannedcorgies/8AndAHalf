@@ -37,6 +37,11 @@ class Scene3 extends Phaser.Scene {
         frameHeight: 76
       });
 
+      this.load.spritesheet('spritesheet_guidoIdle', './assets/GuidoIdle/guido_idle.png', {
+        frameWidth: 150, 
+        frameHeight: 76
+      });
+
     }
   
     create() { 
@@ -47,7 +52,11 @@ class Scene3 extends Phaser.Scene {
       this.cutawaysSpawnY = game.config.height/2 - 100;
 
       // cutaways
-      this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, 0);
+      this.guido = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_guidoIdle', 15, "guido idle", 0, 0, -1);
+      this.guido.alpha = 1;
+      this.guido.play();
+
+      this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, "sly boi", 0);
 
       // just the cam
       this.camera1 = this.cameras.main;
