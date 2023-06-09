@@ -40,11 +40,25 @@ class Scene3 extends Phaser.Scene {
       this.load.image('old', './assets/Cutaways/FirstRound/old_resized.png');
       this.load.image('mom', './assets/Cutaways/FirstRound/mom_resized.png');
 
+      // second round
+      this.load.image('magician', './assets/Cutaways/SecondRound/magician.png');
+      this.load.image('priest', './assets/Cutaways/SecondRound/priest.png');
+      this.load.image('producer', './assets/Cutaways/SecondRound/producer.png');
+      this.load.image('writer', './assets/Cutaways/SecondRound/writer.png');
+      this.load.image('writer hung', './assets/Cutaways/SecondRound/writerHung.png');
+      this.load.image('father', './assets/Cutaways/SecondRound/father.png');
+
+      // reporters
+      this.load.spritesheet('spritesheet_draggingGuido', './assets/Cutaways/Reporters/spritesheet_draggingGuido.png', {
+        frameWidth: 150, 
+        frameHeight: 76
+      });
       this.load.spritesheet('spritesheet_slyMan', './assets/Cutaways/Reporters/slyMan_scaledDown.png', {
         frameWidth: 160, 
         frameHeight: 76
       });
 
+      // idle
       this.load.spritesheet('spritesheet_guidoIdle', './assets/GuidoIdle/guido_idle.png', {
         frameWidth: 150, 
         frameHeight: 76
@@ -59,12 +73,13 @@ class Scene3 extends Phaser.Scene {
       this.midWay = game.config.width/2;
       this.cutawaysSpawnY = game.config.height/2 - 100;
 
-      // cutaways
+      // idle animation
       this.guido = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_guidoIdle', 15, "guido idle", 0, 0, -1);
       this.guido.alpha = 1;
       this.guido.play();
 
-      // first round
+      // cutaways
+        // first round
       this.carla = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'carla', 0, 0, 0, 1);
       this.saraghina = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'saraghina', 0, 0, 0, 1);
       this.claudia = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'claudia', 0, 0, 0, 1);
@@ -72,6 +87,16 @@ class Scene3 extends Phaser.Scene {
       this.old = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'old', 0, 0, 0, 1);
       this.mom = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'mom', 0, 0, 0, 1);
 
+        // second round
+      this.magician = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'magician', 0, 0, 0, 1);
+      this.priest = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'priest', 0, 0, 0, 1);
+      this.producer = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'producer', 0, 0, 0, 1);
+      this.writer = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'writer', 0, 0, 0, 1);
+      this.writerHung = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'writer hung', 0, 0, 0, 1);
+      this.dad = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'dad', 0, 0, 0, 1);
+
+        // last stretch
+      this.draggingGuido = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_draggingGuido', 11, "dragging guido", 0);
       this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, "sly boi", 0);
 
       // just the cam
@@ -166,6 +191,8 @@ class Scene3 extends Phaser.Scene {
 
         if (i == 1) {
           this.sheetMusic.push("a5", this.carla);
+        } if (i == 2) {
+          this.sheetMusic.push("a5", this.magician)
         } else { 
           this.sheetMusic.push("a5"); }
         this.sheetMusic.push("g5sharp");
@@ -189,6 +216,8 @@ class Scene3 extends Phaser.Scene {
         // second line
         if (i == 1) {
           this.sheetMusic.push("g5sharp", this.saraghina);
+        } if (i == 2) {
+          this.sheetMusic.push("g5sharp", this.priest)
         } else { 
           this.sheetMusic.push("g5sharp"); }
         this.sheetMusic.push("f5sharp");
@@ -211,6 +240,8 @@ class Scene3 extends Phaser.Scene {
 
         if (i == 1) {
           this.sheetMusic.push("e5", this.claudia);
+        } if (i == 2) {
+          this.sheetMusic.push("e5", this.producer)
         } else { 
           this.sheetMusic.push("e5"); }
         this.sheetMusic.push("d5sharp");
@@ -220,6 +251,8 @@ class Scene3 extends Phaser.Scene {
         // third line
         if (i == 1) {
           this.sheetMusic.push("d5", this.luisa);
+        } if (i == 2) {
+          this.sheetMusic.push("d5", this.writer)
         } else { 
           this.sheetMusic.push("d5"); }
         this.sheetMusic.push("c5sharp");
@@ -230,6 +263,8 @@ class Scene3 extends Phaser.Scene {
 
         if (i == 1) {
           this.sheetMusic.push("d5", this.old);
+        } if (i == 2) {
+          this.sheetMusic.push("d5", this.writerHung)
         } else { 
           this.sheetMusic.push("d5"); }
         this.sheetMusic.push("c5sharp");
@@ -238,6 +273,8 @@ class Scene3 extends Phaser.Scene {
 
         if (i == 1) {
           this.sheetMusic.push("c5", this.mom);
+        } if (i == 2) {
+          this.sheetMusic.push("c5", this.father)
         } else { 
           this.sheetMusic.push("c5"); }
         this.sheetMusic.push("c5sharp");  //
@@ -249,7 +286,7 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("g5");
-        this.sheetMusic.push("g5sharp");
+        this.sheetMusic.push("g5sharp", this.draggingGuido);
         this.sheetMusic.push("g5");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("f5");       //
