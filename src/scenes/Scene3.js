@@ -32,6 +32,14 @@ class Scene3 extends Phaser.Scene {
       this.load.image('key sharp-left', './assets/key_sharpLeft.png');
       this.load.image('key sharp-both-sides', './assets/key_bothSides.png');
 
+      // first round
+      this.load.image('carla', './assets/Cutaways/FirstRound/carla_resized.png');
+      this.load.image('saraghina', './assets/Cutaways/FirstRound/saraghina_resized.png');
+      this.load.image('claudia', './assets/Cutaways/FirstRound/claudia_resized.png');
+      this.load.image('luisa', './assets/Cutaways/FirstRound/luisa_resized.png');
+      this.load.image('old', './assets/Cutaways/FirstRound/old_resized.png');
+      this.load.image('mom', './assets/Cutaways/FirstRound/mom_resized.png');
+
       this.load.spritesheet('spritesheet_slyMan', './assets/Cutaways/Reporters/slyMan_scaledDown.png', {
         frameWidth: 160, 
         frameHeight: 76
@@ -55,6 +63,14 @@ class Scene3 extends Phaser.Scene {
       this.guido = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_guidoIdle', 15, "guido idle", 0, 0, -1);
       this.guido.alpha = 1;
       this.guido.play();
+
+      // first round
+      this.carla = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'carla', 0, 0, 0, 1);
+      this.saraghina = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'saraghina', 0, 0, 0, 1);
+      this.claudia = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'claudia', 0, 0, 0, 1);
+      this.luisa = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'luisa', 0, 0, 0, 1);
+      this.old = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'old', 0, 0, 0, 1);
+      this.mom = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'mom', 0, 0, 0, 1);
 
       this.slyMan = new Cutaway(this, this.midWay, this.cutawaysSpawnY, 'spritesheet_slyMan', 11, "sly boi", 0);
 
@@ -137,7 +153,7 @@ class Scene3 extends Phaser.Scene {
 
       for (let i = 0; i < 3; i++) {
         // first line
-        this.sheetMusic.push("c5sharp", this.slyMan);
+        this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");  // measure's over
 
@@ -148,7 +164,10 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");  //
 
-        this.sheetMusic.push("a5");
+        if (i == 1) {
+          this.sheetMusic.push("a5", this.carla);
+        } else { 
+          this.sheetMusic.push("a5"); }
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");
         this.sheetMusic.push("g5sharp");
@@ -168,7 +187,10 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("f5sharp");  //
 
         // second line
-        this.sheetMusic.push("g5sharp");
+        if (i == 1) {
+          this.sheetMusic.push("g5sharp", this.saraghina);
+        } else { 
+          this.sheetMusic.push("g5sharp"); }
         this.sheetMusic.push("f5sharp");
         this.sheetMusic.push("g5sharp");
         this.sheetMusic.push("a5");
@@ -187,29 +209,41 @@ class Scene3 extends Phaser.Scene {
         this.sheetMusic.push("e5");
         this.sheetMusic.push("d5sharp");  //
 
-        this.sheetMusic.push("e5");
+        if (i == 1) {
+          this.sheetMusic.push("e5", this.claudia);
+        } else { 
+          this.sheetMusic.push("e5"); }
         this.sheetMusic.push("d5sharp");
         this.sheetMusic.push("e5");
         this.sheetMusic.push("d5sharp");  //
 
         // third line
-        this.sheetMusic.push("d5");
+        if (i == 1) {
+          this.sheetMusic.push("d5", this.luisa);
+        } else { 
+          this.sheetMusic.push("d5"); }
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");  //
 
-        this.sheetMusic.push("d5");
+        if (i == 1) {
+          this.sheetMusic.push("d5", this.old);
+        } else { 
+          this.sheetMusic.push("d5"); }
         this.sheetMusic.push("c5sharp");
         this.sheetMusic.push("d5");
         this.sheetMusic.push("c5sharp");  //
 
-        this.sheetMusic.push("c5");
+        if (i == 1) {
+          this.sheetMusic.push("c5", this.mom);
+        } else { 
+          this.sheetMusic.push("c5"); }
         this.sheetMusic.push("c5sharp");  //
       
       }
-      // second art
+      // second part
         // fourth line
         this.sheetMusic.push("e5");
         this.sheetMusic.push("f5sharp");

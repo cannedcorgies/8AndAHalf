@@ -8,7 +8,7 @@
 
 class Cutaway extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, texture, numFrames, animsKey, frame, time = 0, animsRepeat = 0) {
+    constructor(scene, x, y, texture, numFrames, animsKey = 0, frame = 0, time = 0, animsRepeat = 0) {
 
         console.log("from Cutaway.js: constructing...");
 
@@ -23,12 +23,14 @@ class Cutaway extends Phaser.GameObjects.Sprite {
 
         this.animsKey = animsKey
 
-        this.anims.create({         // simple animation that oscillates between frames 0 and 1, repeating
-            key: this.animsKey,
-            repeat: animsRepeat,
-            frameRate: 12,
-            frames: this.anims.generateFrameNumbers(texture, {start: 0, end: numFrames})
-        });
+        if (animsKey) {
+            this.anims.create({         // simple animation that oscillates between frames 0 and 1, repeating
+                key: this.animsKey,
+                repeat: animsRepeat,
+                frameRate: 12,
+                frames: this.anims.generateFrameNumbers(texture, {start: 0, end: numFrames})
+            });
+        }
 
         // final check
         console.log("   --> constructed!");
