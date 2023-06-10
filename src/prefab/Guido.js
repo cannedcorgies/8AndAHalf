@@ -44,7 +44,7 @@ class Guido extends Phaser.GameObjects.Sprite {
                 controlOff: {acceleration: 0.5, max_x_vel: 20000, max_y_vel: 20000, ground_drag: 500},
                
                 // scene 2 states
-                suspended: {acceleration: 510, max_x_vel: 500, max_y_vel: 250, ground_drag: 2700}
+                suspended: {acceleration: 100, max_x_vel: 100, max_y_vel: 100, ground_drag: 2700}
 
             }
 
@@ -64,7 +64,7 @@ class Guido extends Phaser.GameObjects.Sprite {
             this.bouncing = false;
             this.box = box;
 
-            this.bumped = false;
+            this.bumped = true;
 
         
         // final check

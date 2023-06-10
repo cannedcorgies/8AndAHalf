@@ -423,6 +423,12 @@ class Scene3 extends Phaser.Scene {
         this.blackScreen.alpha = 1;
         this.gunSFX.play();
 
+        let next = this.time.delayedCall(10000, () => {
+
+          this.scene.start("scene3");
+      
+      }, null, this);
+
       }
 
     }

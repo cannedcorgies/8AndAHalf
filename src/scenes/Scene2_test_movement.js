@@ -39,8 +39,8 @@ class Scene2_test_movement extends Phaser.Scene {
         //creating tilemap
         const map = this.add.tilemap('scene2_trial_JSON');
 
-        config.width = map.widthInPixels;
-        config.height = map.heightInPixels;
+        // config.width = map.widthInPixels;
+        // config.height = map.heightInPixels;
 
         this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
 
@@ -207,7 +207,7 @@ class Scene2_test_movement extends Phaser.Scene {
         
         for (let i = 0; i < this.women.length; i++) {     // loop through to enable collision with guido
 
-            this.physics.add.collider(this.guido, this.women[i]);
+            this.physics.add.collider(this.guido, this.women[i], this.setGuidoBouncing, null, this);
 
         }
 
@@ -266,7 +266,12 @@ class Scene2_test_movement extends Phaser.Scene {
 
     setGuidoBouncing() {
 
-        this.guido.bumped = true;
+        console.log("putting him in motion");
+        let next = this.time.delayedCall(60000, () => {
+
+            this.scene.start("scene3");
+        
+        }, null, this);
 
     }
 

@@ -134,7 +134,7 @@ class Scene1 extends Phaser.Scene {
         // at certain time intervals, the player is shown cuts from the movie scene
       this.cutaway = 0;
       this.cutawayDistances = [9000, 18000, 10000];
-      this.cutawayTime = [1000, 1100, 7500]
+      this.cutawayTime = [1000, 1100, 750]
       this.zoomie = 0.3;
 
       this.zoom();  // set initial zoom
@@ -142,6 +142,12 @@ class Scene1 extends Phaser.Scene {
     }
 
     update() {
+
+      if (this.guido.y < -500) {
+
+        this.scene.start("scene2_test_movement")
+
+      }
       //this.camera.shake(100, this.shake)
       this.camera1.shake(100, 0.0008)
 
