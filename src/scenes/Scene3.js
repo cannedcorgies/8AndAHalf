@@ -425,7 +425,7 @@ class Scene3 extends Phaser.Scene {
 
         let next = this.time.delayedCall(10000, () => {
 
-          this.scene.start("scene3");
+          this.scene.start("main menu");
       
       }, null, this);
 
