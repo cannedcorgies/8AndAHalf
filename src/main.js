@@ -20,7 +20,6 @@
 // CONTENT WARNING
 //  - depicted suicide
 //  - lynching
-//  - themes of mysogyny
 //
 ///////////////////////////
 
