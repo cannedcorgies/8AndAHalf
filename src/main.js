@@ -1,6 +1,26 @@
 //// 8 1/2 ///////////
 //
-// 
+// Major Physics Components Used:
+//  - physics
+//  - cameras
+//  - text objects
+//  - animation manager
+//  - sounds
+//  - tweens
+//  - timers
+//  - tilemaps
+//
+// descriptors
+//  - atmospheric
+//  - surreal
+//  - abstract
+//
+///////////////////////////
+//
+// CONTENT WARNING
+//  - depicted suicide
+//  - lynching
+//  - themes of mysogyny
 //
 ///////////////////////////
 
@@ -25,7 +45,7 @@ let config = {
     },
 
     // TODO: MENU IS DONE; JUST NEED TO ADD INTO THIS LIST
-    scene: [MainMenu, Credits, Scene2_test_movement, Scene3, Scene2, Scene1], //add menu later
+    scene: [MainMenu, Credits, Scene3, Scene2, Scene1], //add menu later
 }
 
 let game = new Phaser.Game(config);

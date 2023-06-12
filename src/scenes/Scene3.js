@@ -1,3 +1,27 @@
+////////////////
+//
+// this scene changes up the pace
+//  by putting the player completely
+//  in charge of it
+// the scene explores guido's nostalgia
+//  as he remembers the women in his life
+//  before being knocked back to reality
+//  at a press event
+//
+//  prefabs:
+//  - Piano
+//  - SheetMusic
+//  - Cutaway
+//
+//  NOTE ON THE MACHINERY
+//  - the piano works as an object queue that receives "ticks"
+//    - each object within the queue has a key and either has
+//      a cutaway or it doesn't
+//    - if the tick received corresponds to the key, it plays
+//      the cutaway if present, and then it pops the object
+//
+////////////////
+
 class Scene3 extends Phaser.Scene {
 
     constructor() {
@@ -220,6 +244,7 @@ class Scene3 extends Phaser.Scene {
       this.sheetMusic = new SheetMusic(this, 0, 0);
       this.piano.sheetMusic = this.sheetMusic;
 
+      // populating the sheet music
       // first part
 
       for (let i = 0; i < 3; i++) {

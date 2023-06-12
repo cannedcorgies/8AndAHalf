@@ -18,7 +18,7 @@ class Credits extends Phaser.Scene {
         this.gap = 35;
 
         this.director = this.add.text(game.config.width/2 - 50, game.config.height/2, "film by federico fellini");
-        this.me = this.add.text(game.config.width/2 - 40, this.director.y + this.gap, "game by me");
+        this.me = this.add.text(game.config.width/2 - 40, this.director.y + this.gap, "game by me (fern)");
         this.piano = this.add.text(game.config.width/2 - 30, this.me.y + this.gap, "paino sfx from onlinesequencer.net");
         this.gunshot = this.add.text(game.config.width/2 - 20, this.piano.y + this.gap, "gunshot sfx by benyay on youtube");
 
